@@ -26,7 +26,9 @@ Others: <https://github.com/wbjeon2k/readme> 원본 레포
 ### Overview
 
 MIIL Slurm Cluster 사용 방법 안내입니다.  
-Slurm 은 Simple Linux Utility for Resource Management 의 약자로, HPC 클러스터 관리를 하는 전세계 표준 도구입니다.  
+Slurm 은 Simple Linux Utility for Resource Management 의 약자로,  
+HPC 클러스터 관리를 하는 전세계 표준 도구입니다.  
+
 사용자들은 Slurm command를 통해서 자원 요청을 하고, Slurm은 가능한 경우 자원을 할당합니다.  
 자원이 모자라는 경우, 자동으로 Pending(PD) 상태가 되어서 줄을 서게 됩니다.  
 
@@ -39,7 +41,7 @@ Slurm 은 Simple Linux Utility for Resource Management 의 약자로, HPC 클러
 데이터셋 공유 및 개인별 디스크 사용량 제한을 통해 효율적으로 서버 디스크 관리를 하고자 합니다.  
 (ImageNet 5개 중복으로 다운 받아서 1TB 잡아먹는 현상 방지, 한 사람이 1TB 사용하는 현상 방지 등)  
 
-**데이터셋 디렉토리에 임의로 개인 대용량 파일을 저장하는 등 어뷰징하면 삭제합니다.**
+*데이터셋 디렉토리에 임의로 개인 대용량 파일을 저장하는 등 어뷰징하면 삭제합니다.*
 
 ### GPU Resource Restriction
 
