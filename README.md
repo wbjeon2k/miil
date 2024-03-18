@@ -1,11 +1,12 @@
 ---
 layout: home
 title: MIIL Slurm User Guide v0.0.1
-permalink: /
+permalink: /readme
 ---
 
 <!--
 bundle exec jekyll serve --host=10.20.22.87
+http://127.0.0.1:4000/miil/readme.html
 -->
 
 ## 전체 서버 사용량 파악
