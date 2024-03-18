@@ -143,6 +143,65 @@ sbatch example_job.sh
 `job_id`를 까먹었어도 괜찮습니다. 아래 '전체 서버 사용량 파악'을 통해서 알 수 있습니다.  
 **자기 작업만 취소 가능합니다!**.
 
+## 튜토리얼
+
+### srun
+
+- 자기 계정으로 서버1에 접속, conda 설치. bash 실행시 `(base) jwb@server1` 과 같이 표시되는지 확인.
+- 자기 계정으로 관리서버 `slurmmaster(10.20.22.87)` 접속. `ssh -p 4091 asdf@10.20.22.87`
+- 관리서버(10.20.22.87) 에는 conda를 깔지 않도록 주의합니다! 깔아봤자 아무 소용 없습니다.
+- `srun -p srun --gres=gpu:1 -w server1 -J <작업이름> --pty /bin/bash` 실행
+- 자원이 배정 되었을때, `(base) jwb@server1`과 같이 표시되면 정상입니다.
+- `nvidia-smi`, `echo $CUDA_VISIBLE_DEVICES` 를 확인 해봅시다. <br> 서버 총 GPU는 3개지만, visible device는 1개임을 확인할 수 있습니다.
+
+![srun_tutorial](./assets/srun_tutorial.png)
+
+![srun_tutorial2](./assets/srun_tutorial2.png)
+
+### sbatch
+
+- 자기 계정으로 서버1에 접속, `/home/<user>` 에 `example_job.py`를 만들어 봅시다. <br>
+
+  ```python
+  # /home/jwb/example_job.py
+  import time
+
+  def main():
+      print("starting sleep for 30 seconds")
+      time.sleep(60)
+      print("end sleep")
+
+  if __name__ == "__main__":
+      main()
+  ```
+- 자기 계정으로 마스터 서버 `slurmmaster(10.20.22.87)` 접속. `ssh -p 4091 asdf@10.20.22.87`
+- 마스터 서버에서 아래와 같이 `example_job.sh` 를 만들어 봅시다. <br>
+  
+  ```bash
+  #!/bin/bash
+  # Job name:
+  #SBATCH --job-name=EXAMPLEJOB
+  #
+  # Partition:
+  #SBATCH --partition=sbatch
+  #
+  #
+  # Request one node:
+  #SBATCH --nodes=1
+  #
+  # Specify the node's name
+  #SBATCH --nodelist=server1
+  #SBATCH --output=sbatch.out
+  #
+  ## Command(s) to run (example):
+
+  python3 /home/jwb/example_job.py
+  ```
+- `sbatch example_job.sh`를 관리서버에서 실행 시키면, <br> 신청한 자원이 할당 가능한 경우 지정한 노드(여기선 서버1) 에서 `python3 /home/jwb/example_job.py`를 실행합니다.
+- 자기가 신청한 작업이 접수되어서 실행되거나(R), 대기중인지(PD) 살펴봅시다.
+
+![sbatch_tutorial](./assets/sbatch_tutorial.png)
+
 
 <!-- Make Jelly site have a GitBook look!
 
