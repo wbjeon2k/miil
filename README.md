@@ -51,6 +51,7 @@ HPC 클러스터 관리를 하는 전세계 표준 도구입니다.
 이는 시스템적인 오류가 아니라, 모든 GPU 자원은 Slurm을 거쳐서 사용하도록 만든 의도적인 설계입니다.
 
 따라서 아래와 같은 순서로 사용하는 것을 **매우** 권장합니다.
+
 - Programming in general: 서버에 직접 ssh 접속을 하여 프로그래밍을 합니다.
 - `srun` : `srun`을 통해서 GPU를 할당받고 디버깅을 합니다.
 - `sbatch` : `sbatch`를 통해서 본격적인 실험을 돌리고 기다립니다.
@@ -92,6 +93,7 @@ Slurm에 자원을 요청하는 방법은 크게 `srun` 과 `sbatch` 두 가지�
 ### sbatch
 
 간단 요약:
+
 ```bash
 #!/bin/bash
 # example_job.sh
@@ -132,7 +134,7 @@ sbatch example_job.sh
 
 `sbatch`작업의 option들은 `#SBATCH --<opt_name>=<opt_content>` 와 같은 형식으로 구성됩니다.
 **해당 옵션들은 실행하고자 하는 cmd들 보다 먼저 선언되어야 합니다!**  
-예를 들어, 위 예시 sbatch 파일의 `export PATH= ... ` 전에 `#SBATCH --nodelist= ...` 옵션들의 작성이 완료 되어야 합니다.
+예를 들어, 위 예시 sbatch 파일의 `export PATH= ...` 전에 `#SBATCH --nodelist= ...` 옵션들의 작성이 완료 되어야 합니다.
 
 ### 잘못 제출했어요
 
