@@ -18,7 +18,7 @@ http://127.0.0.1:4000/miil/readme.html
 ## MIIL Slurm User Guide
 
 Written by <woongbae@unist.ac.kr>. UPD 20240316  
-교내 IP 접속 : <http://10.20.22.87:4000/miil/readme.html>  
+교내 IP 접속 : <http://10.20.22.87:4000/miil>  
 교외 접속: <https://wbjeon2k.github.io/readme/readme.html>, Github Pages 문제로 readme만 읽기 가능  
 Others: <https://github.com/wbjeon2k/readme> 원본 레포
 
