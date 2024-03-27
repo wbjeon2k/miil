@@ -1,7 +1,7 @@
 ---
 layout: home
 title: MIIL Slurm User Guide v0.0.1
-permalink: /readme
+permalink: /
 ---
 
 <!--
