@@ -153,20 +153,20 @@ sbatch example_job.sh
 ## 튜토리얼
 
 ### Conda
+
 - **`slurmmaster(10.20.22.87)` 을 제외한**, `srun` 과 `sbatch`를 통해 사용하고자 하는 서버들에 conda 혹은 유사한 기능의 python venv 를 설정합시다.
-- `miniconda` 설치 방법 확인. <https://conda.io/projects/conda/en/latest/user-guide/install/linux.html> <br>
+- `miniconda` 설치 방법 확인. <https://conda.io/projects/conda/en/latest/user-guide/install/linux.html>  
+
 ```bash
 mkdir -p ~/miniconda3
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
 bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-#/home/<your_user_id>/miniconda3 에 자동으로 설치.
+# /home/<your_user_id>/miniconda3 에 자동으로 설치.
 rm -rf ~/miniconda3/miniconda.sh
-
 # conda init && restart로 설치 반영
 /home/<your_user_id>/miniconda3/bin/conda init && exec bash
 ```
-<br>
-또는 [링크](https://velog.io/@yznny/linux%EC%97%90-Anaconda-%EC%84%A4%EC%B9%98) 등 다른 자료를 참조하여 설치합시다.
+- 여기에 적힌 방법 말고 다른 방법을 원한다면 [링크](https://velog.io/@yznny/linux%EC%97%90-Anaconda-%EC%84%A4%EC%B9%98) 등 자료를 참조하여 설치합시다.
 
 ### srun
 
@@ -176,7 +176,7 @@ rm -rf ~/miniconda3/miniconda.sh
 - `srun -p srun --gres=gpu:1 -w server1 -J <작업이름> --pty /bin/bash` 실행
 - 자원이 배정 되었을때, `(base) jwb@server1`과 같이 표시되면 정상입니다.
 - `nvidia-smi`, `echo $CUDA_VISIBLE_DEVICES` 를 확인 해봅시다. <br> 서버 총 GPU는 3개지만, visible device는 1개임을 확인할 수 있습니다.
-- <10.20.22.87:8888> 에 접속하여 해당 작업이 표시되는지 확인합니다. (*`Display my job only` 체크 해제*)
+- <http://10.20.22.87:8888> 에 접속하여 해당 작업이 표시되는지 확인합니다. (*`Display my job only` 체크 해제*)
 
 ![srun_tutorial](./assets/srun_tutorial.png)
 
