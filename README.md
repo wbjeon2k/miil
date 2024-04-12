@@ -35,9 +35,11 @@ HPC 클러스터 관리를 하는 전세계 표준 도구입니다.
 
 ### Disk Resource Restriction
 
-각 사용자별로 디스크 사용량이 제한됩니다. 왼쪽의 'Restriction' 을 참조하세요.  
+각 사용자별로 디스크 사용량이 제한됩니다. 왼쪽의 ['Restriction'](https://wbjeon2k.github.io/miil/restriction/2024-03-16-restriction.html) 을 참조하세요.  
+
 개인별로 용량 제한 아래에서 자유롭게 사용 가능한 `/data` 디렉토리와,  
 모든 사람들이 공유를 할 수 있는 공용 데이터셋 `/dataset` 디렉토리로 나뉘어져 있습니다.  
+(*`/dataset` 디렉토리는 서버 용량에 따라 없을수도 있습니다.*)
 
 데이터셋 공유 및 개인별 디스크 사용량 제한을 통해 효율적으로 서버 디스크 관리를 하고자 합니다.  
 (ImageNet 5개 중복으로 다운 받아서 1TB 잡아먹는 현상 방지, 한 사람이 1TB 사용하는 현상 방지 등)  
@@ -150,14 +152,31 @@ sbatch example_job.sh
 
 ## 튜토리얼
 
+### Conda
+- **`slurmmaster(10.20.22.87)` 을 제외한**, `srun` 과 `sbatch`를 통해 사용하고자 하는 서버들에 conda 혹은 유사한 기능의 python venv 를 설정합시다.
+- `miniconda` 설치 방법 확인. <https://conda.io/projects/conda/en/latest/user-guide/install/linux.html> <br>
+```bash
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+#/home/<your_user_id>/miniconda3 에 자동으로 설치.
+rm -rf ~/miniconda3/miniconda.sh
+
+# conda init && restart로 설치 반영
+/home/<your_user_id>/miniconda3/bin/conda init && exec bash
+```
+<br>
+또는 [링크](https://velog.io/@yznny/linux%EC%97%90-Anaconda-%EC%84%A4%EC%B9%98) 등 다른 자료를 참조하여 설치합시다.
+
 ### srun
 
-- 자기 계정으로 서버1에 접속, conda 설치. bash 실행시 `(base) jwb@server1` 과 같이 표시되는지 확인.
+- 자기 계정으로 서버1에 접속, conda 설치. bash 실행시 `(base) jwb@server1` 과 같이 표시되는지 확인. `ssh -p 55125 asdf@10.20.22.107`
 - 자기 계정으로 관리서버 `slurmmaster(10.20.22.87)` 접속. `ssh -p 4091 asdf@10.20.22.87`
 - 관리서버(10.20.22.87) 에는 conda를 깔지 않도록 주의합니다! 깔아봤자 아무 소용 없습니다.
 - `srun -p srun --gres=gpu:1 -w server1 -J <작업이름> --pty /bin/bash` 실행
 - 자원이 배정 되었을때, `(base) jwb@server1`과 같이 표시되면 정상입니다.
 - `nvidia-smi`, `echo $CUDA_VISIBLE_DEVICES` 를 확인 해봅시다. <br> 서버 총 GPU는 3개지만, visible device는 1개임을 확인할 수 있습니다.
+- <10.20.22.87:8888> 에 접속하여 해당 작업이 표시되는지 확인합니다. (*`Display my job only` 체크 해제*)
 
 ![srun_tutorial](./assets/srun_tutorial.png)
 
