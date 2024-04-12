@@ -17,11 +17,9 @@ http://127.0.0.1:4000/miil
 
 ## MIIL Slurm User Guide
 
-Written by <woongbae@unist.ac.kr>. UPD 20240316  
-교내 IP 접속 : <http://10.20.22.87:4000/miil>  
-교외 접속: <https://wbjeon2k.github.io/miil> 
+Written by <woongbae@unist.ac.kr>. UPD 20240410  
+매뉴얼 확인: <https://wbjeon2k.github.io/miil> 
 Others: <https://github.com/wbjeon2k/readme> 원본 레포
-
 
 ### Overview
 
@@ -37,7 +35,9 @@ HPC 클러스터 관리를 하는 전세계 표준 도구입니다.
 ### Disk Resource Restriction
 
 각 사용자별로 디스크 사용량이 제한됩니다. 왼쪽의 'Restriction' 을 참조하세요.  
-모든 데이터셋은 각 서버별 `/data` 디렉토리에 각 서버 별 `data@server_name` 계정을 통해서 올릴 수 있습니다.
+개인별로 용량 제한 아래에서 자유롭게 사용 가능한 `/data` 디렉토리와,  
+모든 사람들이 공유를 할 수 있는 공용 데이터셋 `/dataset` 디렉토리로 나뉘어져 있습니다.  
+
 데이터셋 공유 및 개인별 디스크 사용량 제한을 통해 효율적으로 서버 디스크 관리를 하고자 합니다.  
 (ImageNet 5개 중복으로 다운 받아서 1TB 잡아먹는 현상 방지, 한 사람이 1TB 사용하는 현상 방지 등)  
 
@@ -70,7 +70,7 @@ Slurm에 자원을 요청하는 방법은 크게 `srun` 과 `sbatch` 두 가지�
 
 ### srun
 
-한 줄 요약: `srun -p srun --gres=gpu:<type>:<number> -w <node name> -J <jobname> --pty /bin/bash`
+한 줄 요약: `srun -p srun --gres=gpu:<type>:<number> -w <node name> -J <jobname> --pty /bin/bash` 을 `<user>@slurmmaster` 에 접속해서 실행.
 
 |옵션 이름|구분|설명|상세|
 |:---|:---|:---|:---|
