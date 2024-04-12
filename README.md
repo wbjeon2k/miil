@@ -18,7 +18,8 @@ http://127.0.0.1:4000/miil
 ## MIIL Slurm User Guide
 
 Written by <woongbae@unist.ac.kr>. UPD 20240410  
-매뉴얼 확인: <https://wbjeon2k.github.io/miil> 
+매뉴얼 확인: <https://wbjeon2k.github.io/miil>  
+ID 신쳥 현황: <https://docs.google.com/spreadsheets/d/1_GDAGOQrzGR5rvxuSb47ixEdsWmwomVn5z94GnXuFk0/edit?pli=1#gid=0>
 Others: <https://github.com/wbjeon2k/readme> 원본 레포
 
 ### Overview
@@ -83,7 +84,7 @@ Slurm에 자원을 요청하는 방법은 크게 `srun` 과 `sbatch` 두 가지�
 예시 1: `srun -p srun --gres=gpu:1 -w server1 --pty /bin/bash`  
 예시 1 해석: 서버1의 GPU 아무거나 하나 배정해줘.
 
-예시 2: `srun -p srun --gres=gpu:RTX3090:1 -w server1 --pty /bin/bash`  
+예시 2: `srun -p srun --gres=gpu:RTX3090:2 -w server1 --pty /bin/bash`  
 예시 2 해석: 서버1의 GPU들 중 RTX3090을 두 개 배정해줘.
 
 `srun`을 통해 배정 받은 세션을 종료하면 자동으로 작업이 끝나고 자원들이 반납됩니다!  
