@@ -155,17 +155,18 @@ sbatch example_job.sh
 ### Conda
 
 - **`slurmmaster(10.20.22.87)` 을 제외한**, `srun` 과 `sbatch`를 통해 사용하고자 하는 서버들에 conda 혹은 유사한 기능의 python venv 를 설정합시다.
-- `miniconda` 설치 방법 확인. <https://conda.io/projects/conda/en/latest/user-guide/install/linux.html>  
+- `miniconda` 설치 방법 확인. <https://conda.io/projects/conda/en/latest/user-guide/install/linux.html> 공식링크.  
 
-```bash
-mkdir -p ~/miniconda3
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
-bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-# /home/<your_user_id>/miniconda3 에 자동으로 설치.
-rm -rf ~/miniconda3/miniconda.sh
-# conda init && restart로 설치 반영
-/home/<your_user_id>/miniconda3/bin/conda init && exec bash
-```
+  ```bash
+    mkdir -p ~/miniconda3
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+    # /home/<your_user_id>/miniconda3 에 자동으로 설치.
+    rm -rf ~/miniconda3/miniconda.sh
+    # conda init && restart로 설치 반영
+    /home/<your_user_id>/miniconda3/bin/conda init && exec bash
+  ```
+  
 - 여기에 적힌 방법 말고 다른 방법을 원한다면 [링크](https://velog.io/@yznny/linux%EC%97%90-Anaconda-%EC%84%A4%EC%B9%98) 등 자료를 참조하여 설치합시다.
 
 ### srun
