@@ -15,12 +15,34 @@ GPU 사용량 제한은 partition(srun/sbatch) 별로 다르게 책정 되었습
 정작 중요한 sbatch 실험 작업들이 리소스를 못 받아서 오래 기다리는 현상(starvation)을 방지하기 위함입니다.
 
 아래 표를 통해서 GPU 사용량 제한을 확인하고,  
-sbatch/srun을 통해 자원을 할당 받을 때 참고하세요. (예: 서버5는 gpu 3개 비어 있으니까 4개 신청하면 기다리겠네)
+sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.  
+(예: 서버5는 gpu 3개 비어 있으니까 4개 신청하면 기다리겠네)  
+(예2: 지금 gpu를 5개 쓰고 있으니까 최대 3개를 더 쓸수 있겠네)  
 
-|Name | 최대GPU개수 | 최소GPU개수 |  기본배정시간 |  최대배정시간 |  메모리제한 |
-|------|:------|:------|:------|:------|:------|
-|srun  |   gres/gpu=2  |  gres/gpu=1 | 1 day | 1 day | 128G |
-|sbatch  |   gres/gpu=4 |   gres/gpu=1 | 2 days | 7 days | 128G |
+|Name | 최대GPU개수 | 서버 당 최대GPU개수 | 최소GPU개수 | 최대 제출가능 작업 | 최대 실행가능 작업 | 기본배정시간 |  최대배정시간 |  메모리제한 |  
+|------|:------|:------|:------|:------|:------|:------|:------|:------|  
+|srun    |   gres/gpu=2 | gres/gpu=2 | gres/gpu=1 | 1개 | 1개 | 1 day  | 3 days | 128G |
+|sbatch  |   gres/gpu=8 | gres/gpu=4 | gres/gpu=1 | 8개 | 4개 | 2 days | 7 days | 128G |
+
+- 최대 GPU개수(`MaxTRESPerUser`) : 1 사람이 최대로 사용할 수 있는 GPU 개수입니다.
+    <br> 모든 `srun` 및 `sbatch` 작업에서 사용되는 gpu 개수를 합쳤을 때 8개를 넘길 수 없습니다.
+    <br> `e.g. srun job A 1개, sbatch job B 3개 쓰고 있을 때 / sbatch job C에 최대 4개 가능`
+- 서버 당 최대GPU개수(`MaxTRESPerNode`) : 1개의 서버에서 최대로 사용할 수 있는 GPU의 개수입니다.
+    <br> `e.g. server2에 GPU 8개 있지만, 최대 4개 사용 가능.`
+- 최소GPU개수(`MinTRES`) : 최소로 사용을 해야하는 GPU 개수입니다. 1개로 설정 되어있습니다. <br>
+    (i.e. GPU 사용 안하면 Slurm 제출하지 말라는 의미입니다.)
+- 최대 실행가능 작업(`MaxJobsPerUser`) : 1 사람이 최대로 실행할 수 있는 작업 개수입니다. `srun`과 `sbatch` 전부 포함입니다.
+    <br> `e.g. srun 1개, sbatch 3개 가능 / sbatch 5개 불가능`
+- 최대 제출가능 작업(`MaxSubmitJobsPU`) : 1 사람이 최대로 접수할 수 있는 작업 개수입니다. `srun`과 `sbatch` 전부 포함입니다.
+    <br> `e.g. srun 1개, sbatch 4개 실행 중이라면? sbatch 최대 3개 접수 가능.`
+
+더 자세히 알고싶거나 직접 Slurm 을 통해 확인해보고 싶다면 다음 cmd를 사용하세요.  
+`sacctmgr show qos format=name,MaxTRESPerUser,MaxTRESPerNode,MinTRES,MaxJobsPerUser,MaxSubmitJobsPU`
+
+- 기본 배정시간 : `sbatch` 는 2일(2880 mins) 입니다.
+- 최대 배정시간 : `sbatch` 는 7일, `srun`은 1일 입니다.
+    <br> 최대 배정시간을 넘긴 작업은 자동으로 종료 및 삭제됩니다.
+    <br> 너무 큰 실험을 한꺼번에 많이 돌리지 마세요.
 
 ### 메모리 제한
 
