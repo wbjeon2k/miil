@@ -2,11 +2,8 @@
 title: (Expected) FAQ
 author: Woongbae Jeon
 date: 2024-03-16
-category: FAQ
 layout: post
 ---
-
-# (Expected) FAQ
 
 ### Q. sbatch 작업을 srun 파티션에 제출하거나 vice versa의 경우 어떻게 되나요?
 

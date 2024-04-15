@@ -2,7 +2,6 @@
 title: Resource Restriction
 author: Woongbae Jeon
 date: 2024-03-16
-category: Restriction
 layout: post
 ---
 
