@@ -34,6 +34,14 @@ srun 작업을 sbatch에 제출하면 제출이 즉시 거부되거나, 제출 �
 CPU/GPU/Mem 중 하나라도 최대 사용량 OR 현재 배정받을 수 있는 양을 초과한다면  
 자리가 빌 때 까지 기다리게 됩니다. 배정 가능한 양을 [여기](https://wbjeon2k.github.io/miil/pages/resource-access/)를 읽어보고 확인합시다.
 
+### Q. nvidia-smi, nvcc 깔고 싶어요
+
+nvcc(Cuda Toolkit), nvidia-smi 설치는 필요 없습니다.  
+PyTorch가 cuda toolkit 버전에 맞춰서 컴파일 돼서 나오기 때문에,  
+로컬에서 `nvcc -V` 안돼도 쓰는데에 전혀 문제가 없습니다.  
+
+자세한 내용은 옆에 링크들을 통해서 알아봅시다. [Ref1](https://www.reddit.com/r/pytorch/comments/13siy1d/confused_about_when_to_manually_install_cuda_for/) [Ref2](https://discuss.pytorch.org/t/is-nvidia-driver-already-included-cuda-and-cuda-toolkit/184411/2)
+
 ### Q. srun으로 배정을 받으면 알림이 오나요?
 
 아니요, 알림을 보내는 시스템이 없습니다. 수시로 확인 해야합니다.

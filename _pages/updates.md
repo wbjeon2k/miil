@@ -12,3 +12,7 @@ layout: post
 - 사용가능한 자원 조회 페이지 업데이트
 - UPD 페이지 업데이트
 - Restriction 페이지 업데이트
+
+#### UPD 20240419
+
+- FAQ update
