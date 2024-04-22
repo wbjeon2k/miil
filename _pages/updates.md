@@ -16,3 +16,8 @@ layout: post
 #### UPD 20240419
 
 - FAQ update
+
+#### UPD 20240422
+
+- 사용 예시 추가
+- FAQ update
