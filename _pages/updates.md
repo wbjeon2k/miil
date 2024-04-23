@@ -21,3 +21,8 @@ layout: post
 
 - 사용 예시 추가
 - FAQ update
+
+#### UPD 20240423
+
+- 서버3 GPU 할당 오류 해결
+- list-of-gpus 업데이트
