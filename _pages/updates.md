@@ -31,3 +31,4 @@ layout: post
 
 - 서버4 개장
 - list-of-gpus 업데이트
+- MaxTrexPerUser gres/gpu=12 조정

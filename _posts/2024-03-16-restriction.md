@@ -10,7 +10,7 @@ layout: post
 |Name | 1인당 최대GPU개수 | 서버 당 최대GPU개수 | 최소GPU개수 | 최대 제출가능 작업 | 최대 실행가능 작업 |  
 |----|:---|:---|:---|:---|:---|  
 |srun    |   gres/gpu=2 | gres/gpu=2 | gres/gpu=1 | 1개 | 1개 |
-|sbatch  |   gres/gpu=8 | gres/gpu=4 | gres/gpu=1 | 8개 | 4개 |
+|sbatch  |   gres/gpu=12 | gres/gpu=4 | gres/gpu=1 | 8개 | 4개 |
 
 |Name | 기본 CPU개수 | 서버당 최대CPU개수 | 기본 메모리(MB) | 최대 메모리(MB) | 기본 배정 시간 | 최대 배정 시간|  
 |----|:---|:---|:---|:---|:---|:---|
