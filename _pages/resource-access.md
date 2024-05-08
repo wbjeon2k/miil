@@ -10,6 +10,14 @@ layout: post
 <http://10.20.22.87:8888/lab/workspaces/auto-h/tree/check_resource.ipynb>  
 위 링크에 있는 `ipynb` 파일에 있는 cmd와 동일합니다.
 
+각 옵션 옆에 붙어있는 숫자는 해당 column의 글자 개수 입니다.
+내용이 길어서 길이가 잘린다면 글자 개수를 늘려봅시다.
+```bash
+# example
+sinfo -p srun -NO "CPUs:8" # CPU 개수 정보가 8칸으로 표시됨
+sinfo -p srun -NO "CPUs:24" # CPU 개수 정보가 24칸으로 표시됨
+```
+
 #### 각 서버별 현재 사용가능한 자원 조회
 
 `sinfo -p srun -NO "CPUs:8,CPUsState:16,Memory:9,AllocMem:10,GresUsed:50,NodeList:14"`

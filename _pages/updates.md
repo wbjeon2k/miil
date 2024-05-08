@@ -26,3 +26,8 @@ layout: post
 
 - 서버3 GPU 할당 오류 해결
 - list-of-gpus 업데이트
+
+#### UPD 20240508
+
+- 서버4 개장
+- list-of-gpus 업데이트
