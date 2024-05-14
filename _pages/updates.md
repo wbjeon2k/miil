@@ -32,3 +32,8 @@ layout: post
 - 서버4 개장
 - list-of-gpus 업데이트
 - MaxTrexPerUser gres/gpu=12 조정
+
+#### UPD 202405014
+
+- restrictions cpu 개수 내용 업데이트
+- 최대 실행 가능 job 개수 6개로 수정
