@@ -37,3 +37,9 @@ layout: post
 
 - restrictions cpu 개수 내용 업데이트
 - 최대 실행 가능 job 개수 6개로 수정
+
+#### UPD 20240515
+
+- `CUDA_VISIBLE_DEVICE`를 srun/sbatch 에서 override 해서 할당받지 않은 gpu를 사용할 수 있음
+  <br> reported by 태환,위범
+- TaskProlog, cgroup, read-only env var 등 을 활용하여 해결할 것으로 예상됨
