@@ -10,7 +10,7 @@ layout: post
 |Name | 1인당 최대GPU개수 | 서버 당 최대GPU개수 | 최소GPU개수 | 최대 제출가능 작업 | 최대 실행가능 작업 |  
 |----|:---|:---|:---|:---|:---|  
 |srun    |   gres/gpu=2 | gres/gpu=2 | gres/gpu=1 | 1개 | 1개 |
-|sbatch  |   gres/gpu=12 | gres/gpu=4 | gres/gpu=1 | 8개 | 4개 |
+|sbatch  |   gres/gpu=12 | gres/gpu=4 | gres/gpu=1 | 8개 | 6개 |
 
 |Name | 기본 CPU개수 | 서버당 최대CPU개수 | 1개 작업 최대 cpu | 기본 메모리(MB) | 최대 메모리(MB) | 기본 배정 시간 | 최대 배정 시간|  
 |----|:---|:---|:---|:---|:---|:---|:---|
@@ -38,9 +38,9 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
 - 최소GPU개수(`MinTRES`) : 최소로 사용을 해야하는 GPU 개수입니다. 1개로 설정 되어있습니다. <br>
     (i.e. GPU 사용 안하면 Slurm 제출하지 말라는 의미입니다.)
 - 최대 실행가능 작업(`MaxJobsPerUser`) : 1 사람이 최대로 실행할 수 있는 작업 개수입니다. `srun`과 `sbatch` 전부 포함입니다.
-    <br> `e.g. srun 1개, sbatch 3개 가능 / sbatch 5개 불가능`
+    <br> `e.g. 제한이 4개라면 srun 1개, sbatch 3개 가능 / sbatch 5개 불가능`
 - 최대 제출가능 작업(`MaxSubmitJobsPU`) : 1 사람이 최대로 접수할 수 있는 작업 개수입니다. `srun`과 `sbatch` 전부 포함입니다.
-    <br> `e.g. srun 1개, sbatch 4개 실행 중이라면? sbatch 최대 3개 접수 가능.`
+    <br> `e.g. 제한이 8개인데 srun 1개, sbatch 4개 실행 중이라면? sbatch 최대 3개 접수 가능.`
 
 더 자세히 알고싶거나 직접 Slurm 을 통해 확인해보고 싶다면 다음 cmd를 사용하세요.  
 `sacctmgr show qos format=name,MaxTRESPerUser,MaxTRESPerNode,MinTRES,MaxJobsPerUser,MaxSubmitJobsPU`
