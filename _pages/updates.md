@@ -6,6 +6,24 @@ category: Jekyll
 layout: post
 ---
 
+### UPD 20240613
+
+**Major update**
+
+- GPU backdoor prevention
+  - Slurm을 통해 할당받지 않은 gpu를 사용하는 경로들을 (상당수) 막았습니다.
+  - ConstraintDevices: `cgroup.conf` 추가, `nvidia-smi` 시 할당 받은 개수만큼만 표시
+  - vscode-server: vscode-server를 통해서 remote session 만들면 `/etc/profile.d` 가 우회되는 현상 있었음. 수동으로 vscode-server session들을 cgroup 이동.
+  - manual counting: Slurm-allocated numbers 와 실제 사용중인 개수가 많이 차이나면 rogue 프로세스 종료. `srun` 할당 후 gpu 유휴중인 경우 고려하였음. PID, Parent PID, Grand Parent PID 에서 slurm spawn 검출되지 않았는데 gpu 접근시 종료.
+
+- TODO : Incoming updates
+  - 6월 말 서버 4,5,6 RAM 증설, 서버4 disk 증설
+  - 서버 5,6 slurm cluster 통합
+  - 서버 5,6 백업 공지
+  - 전체 의견 수렴 (단체 미팅때?)
+  - 워크스테이션 cluster 추가
+  - 워크스테이션2에 NFS 추가
+
 #### UPD 20240418
 
 - 기본 할당되는 CPU의 양이 1개밖에 안되는거 fix
