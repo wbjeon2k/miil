@@ -7,9 +7,9 @@ layout: post
 
 ### Q. Slurm은 왜 쓰나요?
 
-해당 문서 참조 바랍니다. [PDF][1]
+해당 문서 참조 바랍니다. [PDF](https://github.com/wbjeon2k/miil/blob/master/slurm_introduction.pdf)
 
-[1]:{{ wbjeon2k.github.io/miil }}/miil/slurm_introduction.pdf
+<!--[1]:{{ wbjeon2k.github.io/miil }}/miil/slurm_introduction.pdf-->
 
 ### Q. GPU type을 여러개 사용하고 싶습니다
 
