@@ -9,7 +9,7 @@ layout: post
 
 해당 문서 참조 바랍니다. [PDF][1]
 
-[1]:{{ wbjeon2k.github.io/miil }}/slurm_introduction.pdf
+[1]:{{ wbjeon2k.github.io/miil }}/miil/slurm_introduction.pdf
 
 ### Q. GPU type을 여러개 사용하고 싶습니다
 
