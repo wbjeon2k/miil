@@ -11,11 +11,13 @@ layout: post
 |----|:---|:---|:---|:---|:---|  
 |srun    |   gres/gpu=2 | gres/gpu=2 | gres/gpu=1 | 1개 | 1개 |
 |sbatch  |   gres/gpu=12 | gres/gpu=4 | gres/gpu=1 | 8개 | 6개 |
+|workstation  |  gres/gpu=2 | gres/gpu=2 | gres/gpu=1 | 1개 | 1개 |
 
 |Name | 기본 CPU개수 | 서버당 최대CPU개수 | 1개 작업 최대 cpu | 기본 메모리(MB) | 최대 메모리(MB) | 기본 배정 시간 | 최대 배정 시간|  
 |----|:---|:---|:---|:---|:---|:---|:---|
 |srun  | 8 per gpu|24|24| 28300(30G)|135000(128G)| 없음| 1440(1day)|
 |sbatch| 8 per gpu|64|32| 28300(30G)|135000(128G)| 2880(2days)| 10080(7days)|
+|workstation | 8 per gpu|32|32| 28300(30G)|135000(128G)| 2880(2days)| 4320(3days)|
 
 ### GPU 사용량 제한
 
@@ -83,7 +85,20 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
 
 개인별 디스크 사용량 제한량은 대략 `디스크 용량/10` 정도라고 보면 됩니다.
 
-#### /data
+*required: 반드시 있는 것 / optional: 로컬디스크 상황에 따라 없을수도 있음*
+
+#### /home (required)
+
+일반적으로 사용하는 `home` 입니다. `/home/<user>` 아래에서 자유롭게 사용 가능합니다.
+
+#### /nfs (required)
+
+Network File Storage(NFS) 입니다.  
+네트워크 드라이브로 동일한 디스크를 여러 서버에서 사용할 수 있습니다.
+
+NFS 현황은 왼쪽 `List of NFSs` 별도 문서 참조 바랍니다.
+
+#### /data (optional)
 
 개인별로 자유롭게 쓸 수 있는 공간입니다.  
 디스크 사용량 제한 아래에서는 파일 및 디렉토리 생성이 자유롭습니다.
@@ -103,7 +118,11 @@ ImageNet 등 대용량 데이터셋을 저장할 때,
 
 #### Quota 현황
 
-| nodename | / size,quota | /home size,quota | /data size,quota | /data1 size,quota | /data2 size,quota | data3 size,quota |
+각 서버에서 `quota` 실행시 확인할 수 있습니다.
+
+![quota_example](/miil/assets/quota_example.png)
+
+<!-- | nodename | / size,quota | /home size,quota | /data size,quota | /data1 size,quota | /data2 size,quota | data3 size,quota |
 |----------|--------|------------|------------|-------------|-------------|------------:|
 |server1 | 246G, 20G | 600G, 45G | 1.8T, 300G |
 |server2 | 210G, 20G | 630G, 50G | 8.5T, 600G |
@@ -113,4 +132,4 @@ ImageNet 등 대용량 데이터셋을 저장할 때,
 |server6 |
 |workstation1 | 567G | 344G |
 |workstation2 | 567G | 344G |
-|workstation3 | 567G | 344G |
+|workstation3 | 567G | 344G | -->
