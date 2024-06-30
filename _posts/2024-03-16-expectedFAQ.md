@@ -5,6 +5,12 @@ date: 2024-03-16
 layout: post
 ---
 
+### Q. Slurm은 왜 쓰나요?
+
+해당 문서 참조 바랍니다. [PDF][1]
+
+[1]:{{ wbjeon2k.github.io/miil }}/slurm_introduction.pdf
+
 ### Q. GPU type을 여러개 사용하고 싶습니다
 
 만약 gpu 4개를 쓴다면,  
@@ -69,6 +75,8 @@ PyTorch가 cuda toolkit 버전에 맞춰서 컴파일 돼서 나오기 때문에
 
 ### Q. --nodes=1 에서 개수를 더 늘릴 수 있나요?
 
+*UPD20240630: multi-node multi-gpu training이 가능해지면 늘릴 수 있습니다.*
+
 현재 MIIL Cluster 환경에서는 `--nodes=1` 의 사용이 강제됩니다.  
 
 각 서버 1~6이 `computing node` 에 해당 되는데요,  
@@ -84,3 +92,11 @@ cmd 3
 node의 개수를 3개로 설정하고, 서버 1,2,3으로 할당했다고 가정합시다.
 위 예시에서 cmd1이 서버 1에서, cmd2가 서버 3에서 실행되는 상황이 발생했을때,  
 서버들 간에 디렉토리 공유가 되어있지 않아서 오류가 날 수 있습니다.
+
+### Q. Disk Quota를 알고 싶어요
+
+![quota_example](/miil/assets/quota_example.png)
+
+사용하고 있는 서버로 이동해서, `quota` 를 실행하면 디렉토리 별 quota 내역이 나옵니다.
+
+NFS는 별도 문서 참조.

@@ -6,6 +6,19 @@ category: Jekyll
 layout: post
 ---
 
+### UPD 20240630
+
+- nfs1, nfs2 추가
+  - nfs1, nfs2가 추가 되었습니다.
+  - 모든 컴퓨팅 노드에서 접근 가능합니다.
+  - 자세한 정보는 왼쪽 'list of NFSs' 참조
+
+- workstation 1,2,3 추가
+  - workstation 들이 전부 추가 되었습니다.
+  - 기본적으로 2일, 최대 3일 이용 가능합니다.
+  - 일단은 한 번에 한 사람만 쓸 수 있도록 하였습니다.
+
+
 ### UPD 20240625
 
 - server5, server6 추가
