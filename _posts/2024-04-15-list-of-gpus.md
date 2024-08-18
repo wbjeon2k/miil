@@ -5,11 +5,17 @@ date: 2024-04-15
 layout: post
 ---
 
+최신 정보는 `sinfo` 를 통해서 시스템에서 직접 확인 바랍니다.
+```bash
+sinfo -p sbatch -NO "CPUs:8,Memory:9,Gres:70,NodeList:14"
+```
+
 ### Server1
 
 |GPU Type | 개수 | Slurm GRES Code|  
 |--------|------|--------|  
 |RTX3090 | 3 | `--gres=gpu:RTX3090:<n>`|
+|RTX4090 | 1 | `--gres=gpu:RTX4090:<n>`|
 
 ### Server2
 
@@ -37,3 +43,16 @@ PCI HW 및 Slurm 버그로 인해서 다음과 같이 사용 바랍니다.
 |GPU Type | 개수 | Slurm GRES Code|  
 |--------|------|--------|  
 |A5000 | 10 | `--gres=gpu:A5000:<n>`|
+
+### Server5
+
+|GPU Type | 개수 | Slurm GRES Code|  
+|--------|------|--------|  
+|A5000 | 10 | `--gres=gpu:A5000:<n>`|
+
+### Server6
+
+|GPU Type | 개수 | Slurm GRES Code|  
+|--------|------|--------|  
+|A100| 2 | `--gres=gpu:A100:<n>`|
+|A6000 | 6 | `--gres=gpu:A6000:<n>`|
