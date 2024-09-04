@@ -6,6 +6,10 @@ category: Jekyll
 layout: post
 ---
 
+### UPD 20240904
+
+- workstation 관련 내용 FAQ에 추가
+
 ### UPD 20240630
 
 - nfs1, nfs2 추가

@@ -100,3 +100,17 @@ node의 개수를 3개로 설정하고, 서버 1,2,3으로 할당했다고 가�
 사용하고 있는 서버로 이동해서, `quota` 를 실행하면 디렉토리 별 quota 내역이 나옵니다.
 
 NFS는 별도 문서 참조.
+
+### Q. Workstation을 사용하고 싶어요
+
+현재 `workstation[1-3]` 은 Slurm의 `workstation` 파티션에**만** 배정 되어 있습니다.
+
+워크스테이션은 한 번에 한 사람만 쓸 수 있도록 설정 하였기 때문입니다.
+
+`-p <partition_name>` 을 통해서 적절하게 선택하면 됩니다.
+
+```bash
+# srun example
+srun -p workstation --gres=gpu:1 -w workstation1 -J example --pty /bin/bash # correct usage
+srun -p srun --gres=gpu:1 -w workstation1 -J example --pty /bin/bash # incorrect. workstation not in srun partition
+```
