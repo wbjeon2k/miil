@@ -18,7 +18,8 @@ layout: post
 
 ### Q. GPU를 번호별로 배정 받을 수 있나요?
 
-`$CUDA_VISIBLE_DEVICES=2` 와 같은 형태로 사용 가능은 하지만,  
+*UPD 20250429*  
+
 번호를 지정하여 배당을 받을수는 없습니다.  
 
 예를 들어, `Q8000`이 `0~7` 까지 있는데 4개를 배정받는다 가정한다면,  
@@ -26,7 +27,7 @@ Slurm은 해당 8개 중에서 4개를 *아무거나* 배정해서 줍니다.
 보통은 `0,1,2,3` 식으로 배정을 하지만, `0,2,3,7` 식으로 배정을 할 수도 있습니다.
 
 또는, 실제로 사용하는 GPU는 `0,2,3,7` 이지만  
-`CUDA_VISIBLE_DEVICES=0,1,2,3` 으로 새로 mapping이 될 수도 있습니다.  
+`CUDA_VISIBLE_DEVICES=0,1,2,3` 으로 새로 mapping이 **됩니다.**.  
 (`CUDA_VISIBLE_DEVICES`는 envirionment variable 이니까 충분히 가능.)
 
 따라서 할당을 받은 후에 `$CUDA_VISIBLE_DEVICES` 를 확인하고,  
@@ -39,24 +40,26 @@ srun 작업을 sbatch에 제출하면 제출이 즉시 거부되거나, 제출 �
 
 ### Q. 기본으로 배정되는 CPU/Mem 보다 더 많이 할당하고 싶어요
 
-- `srun` 을 실행시킬때, `--cpus-per-gpu=<N>`, `--gres=gpu:<N>`, `--mem=<N>GB` 을 통해 배정받고자 하는 자원의 개수를 직접 지정하여 늘리면 됩니다.
-- `sbatch` 스크립트에 `--cpus-per-gpu=<ncpus>`, `--gres=<list>`, `--mem=<size>` 를 수정합니다.
-```bash
-#!/bin/bash
-#예시
-#SBATCH --job-name=jobfromjwb
-#SBATCH --partition=sbatch
-#SBATCH --nodes=1
-#SBATCH --gres=gpu:1
-#SBATCH --nodelist=server1
-#SBATCH --output=sbatch.out
-#할당 자원 개수를 직접 정합니다.
-#SBATCH --cpus-per-gpu=<ncpus>
-#SBATCH --gres=<list>
-#SBATCH --mem=<size>
+- `srun` 을 실행시킬때, `--cpus-per-gpu=<N>`, `--gres=gpu:<N>`, `--mem=<N>GB` 을 통해 배정받고자 하는 자원의 개수를 직접 지정하여 늘리면 됩니다.  
 
-~asdf 기타등등~
-```
+- `sbatch` 스크립트에 `--cpus-per-gpu=<ncpus>`, `--gres=<list>`, `--mem=<size>` 를 수정합니다.  
+  
+    ```bash
+    #!/bin/bash
+    #예시
+    #SBATCH --job-name=jobfromjwb
+    #SBATCH --partition=sbatch
+    #SBATCH --nodes=1
+    #SBATCH --gres=gpu:1
+    #SBATCH --nodelist=server1
+    #SBATCH --output=sbatch.out
+    #할당 자원 개수를 직접 정합니다.
+    #SBATCH --cpus-per-gpu=<ncpus>
+    #SBATCH --gres=<list>
+    #SBATCH --mem=<size>
+
+    asdf 기타등등
+    ```
 
 CPU/GPU/Mem 중 하나라도 최대 사용량 OR 현재 배정받을 수 있는 양을 초과한다면  
 자리가 빌 때 까지 기다리게 됩니다. 배정 가능한 양을 [여기](https://wbjeon2k.github.io/miil/pages/resource-access/)를 읽어보고 확인합시다.
@@ -76,22 +79,12 @@ PyTorch가 cuda toolkit 버전에 맞춰서 컴파일 돼서 나오기 때문에
 ### Q. --nodes=1 에서 개수를 더 늘릴 수 있나요?
 
 *UPD20240630: multi-node multi-gpu training이 가능해지면 늘릴 수 있습니다.*
+*UPD20250429: nfs들이 추가됨에 따라 아래 내용을 일부 수정.*
 
-현재 MIIL Cluster 환경에서는 `--nodes=1` 의 사용이 강제됩니다.  
+현재 MIIL Cluster 환경에서는 `--nodes=1` 의 사용이 권장됩니다.  
 
-각 서버 1~6이 `computing node` 에 해당 되는데요,  
-우리 환경은 모든 서버들이 공통적으로 공유하는 디렉토리가 없어서  
-한 서버에서 실행하는 작업이 다른 서버에서도 실행 된다는 보장이 없습니다.  
-```bash
-# example_bash.sh
-# SBATCH CONFIGS OMITTED
-cmd 1
-cmd 2
-cmd 3
-```
-node의 개수를 3개로 설정하고, 서버 1,2,3으로 할당했다고 가정합시다.
-위 예시에서 cmd1이 서버 1에서, cmd2가 서버 3에서 실행되는 상황이 발생했을때,  
-서버들 간에 디렉토리 공유가 되어있지 않아서 오류가 날 수 있습니다.
+NFS들을 통해서 모든 computing node에서 접속 가능한 디스크는 있지만,  
+multi-node training에 필요한 통신이 제대로 되는지는 확인 된 바 없습니다.  
 
 ### Q. Disk Quota를 알고 싶어요
 
@@ -99,7 +92,10 @@ node의 개수를 3개로 설정하고, 서버 1,2,3으로 할당했다고 가�
 
 사용하고 있는 서버로 이동해서, `quota` 를 실행하면 디렉토리 별 quota 내역이 나옵니다.
 
-NFS는 별도 문서 참조.
+NFS에 대해서는, NFS가 mount된 노드에서 quota 실행시 조회 가능합니다.  
+(*e.g. /nfs1 quota 조회 하려면 workstation2 에서 quota 실행.*)
+
+각 디스크별 quota 상세 용량은 별도 문서 참조.
 
 ### Q. Workstation을 사용하고 싶어요
 

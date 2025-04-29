@@ -63,8 +63,8 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
 예를 들어, 32G를 배정 신청 했는데 실제로 32G보다 더 쓴다고 즉시 종료되지 않습니다.  
 
 다만, 과도하게 사용량보다 적거나 많이 배정받지는 말아주세요.  
-- 배정된 메모리 양을 많이 초과해서 쓰면 모든 작업에 메모리 초과가 날 수 있습니다.
-<br> 배정된 메모리가 남아있어서 작업들이 밀려오는데, 실제 메모리가 부족해서 초과 될 수 있습니다.
+
+- 배정된 메모리 양을 많이 초과해서 쓰면 모든 작업에 메모리 초과가 날 수 있습니다. <br> 배정된 메모리가 남아있어서 작업들이 밀려오는데, 실제 메모리가 부족해서 초과 될 수 있습니다.
 - 배정된 메모리보다 너무 적게 쓰면 다른 사람이 못 쓸수도 있습니다.
 
 작업들이 배정받을 메모리가 부족하다면 계속 기다릴수도 있습니다.  
@@ -87,26 +87,15 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
 
 *required: 반드시 있는 것 / optional: 로컬디스크 상황에 따라 없을수도 있음*
 
-#### /home (required)
-
-일반적으로 사용하는 `home` 입니다. `/home/<user>` 아래에서 자유롭게 사용 가능합니다.
-
-#### /nfs (required)
-
-Network File Storage(NFS) 입니다.  
-네트워크 드라이브로 동일한 디스크를 여러 서버에서 사용할 수 있습니다.
-
-NFS 현황은 왼쪽 `List of NFSs` 별도 문서 참조 바랍니다.
-
-#### /data (optional)
+#### /home, /nfs, /data
 
 개인별로 자유롭게 쓸 수 있는 공간입니다.  
 디스크 사용량 제한 아래에서는 파일 및 디렉토리 생성이 자유롭습니다.
 
-#### /dataset (Optional)
+#### /dataset
 
 *서버 용량에 따라서 없는 경우도 있습니다.*  
-*`/dataset` 이 없다면 `/home/<user>` 또는 `/data` 을 용량 제한 내에서 사용 해주세요*  
+*`/dataset` 이 없다면 `/home/<user>` , `nfs` 또는 `/data` 을 용량 제한 내에서 사용 해주세요*  
 
 공통적으로 많이 쓰이는 데이터셋들을 저장하는 디렉토리 입니다.  
 
@@ -121,6 +110,29 @@ ImageNet 등 대용량 데이터셋을 저장할 때,
 각 서버에서 `quota` 실행시 확인할 수 있습니다.
 
 ![quota_example](/miil/assets/quota_example.png)
+
+| nodename | path | size(GB) |
+|------|------|------:|
+|master |  /home | 32G |
+|server1 | /home | 45G |
+|server1 | /data | 300G |
+|server2 | /home | 50G |
+|server2 | /data | 600G |
+|server2 | /dataset | 0G |
+|server3 | /home | 300G |
+|server3 | /data | 330G |
+|server4 | /home | 400G |
+|server5 | /home | 150G |
+|server5 | /data | 150G |
+|server5 | /nfs2 | 250G |
+|server6 | /home | 150G |
+|server6 | /data | 150G |
+|workstation1 | /home | 60G |
+|workstation2 | /home | 60G |
+|workstation2 | /nfs1 | 250G |
+|workstation3 | /home | 80G |
+|workstation3 | /nfs3 | 500G |
+|workstation3 | /nfs4 | 500G |
 
 <!-- | nodename | / size,quota | /home size,quota | /data size,quota | /data1 size,quota | /data2 size,quota | data3 size,quota |
 |----------|--------|------------|------------|-------------|-------------|------------:|

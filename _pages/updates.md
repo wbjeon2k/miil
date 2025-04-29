@@ -6,6 +6,12 @@ category: Jekyll
 layout: post
 ---
 
+### UPD 20250429
+
+- readme.md 수정
+- restrictions.md 디스크 별 quota 용량 최신화
+- 기타 추가 내용 작성 및 수정
+
 ### UPD 20240904
 
 - workstation 관련 내용 FAQ에 추가
