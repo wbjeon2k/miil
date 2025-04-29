@@ -41,7 +41,7 @@ HPC 클러스터 관리를 하는 전세계 표준 도구입니다.
 각 사용자별로 디스크 사용량이 제한됩니다.  
 개인별 디스크 사용량 제한은 효율적인 서버 디스크 관리를 하기 위해서 필요합니다.  
 
-상세 용량은 왼쪽의 ['Restriction'](https://wbjeon2k.github.io/miil/restriction/2024-03-16-restriction.html) 을 참조하세요.  
+상세 용량은 왼쪽의 ['Resource Restriction'](https://wbjeon2k.github.io/miil/2024-03-16-restriction.html) 의 `Quota 현황` 을 참조하세요.  
 
 개인별로 용량 제한 아래에서 자유롭게 사용 가능한 `/data` , `nfs` 디렉토리와,  
 모든 사람들이 공유를 할 수 있는 공용 데이터셋 `/dataset` 디렉토리로 나뉘어져 있습니다.  
