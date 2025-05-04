@@ -21,7 +21,7 @@
     min-height: calc(100% - 50px);
 }
 
-@media (max-width: 1240px) {
+@media (max-width: 1440px) {
     .book-body .body-inner {
         position: absolute;
         margin-top: 50px;
@@ -37,7 +37,7 @@
     padding-bottom: 20px;
 }
 
-@media (max-width: 1240px) {
+@media (max-width: 1440px) {
     .book-body .body-inner .navigation {
         max-width: calc(50% - 3px);
         width: calc(50% - 3px);
@@ -62,11 +62,11 @@
 }
 
 .page-inner {
-    max-width: {{ site.page_width | default: '800px' }};
+    max-width: {{ site.page_width | default: '1200px' }};
 }
 
 .back-to-top {
-    right: calc((100% - 300px - min(100% - 300px, {{ site.page_width | default: '800px' }})) / 2 + 25px);
+    right: calc((100% - 300px - min(100% - 300px, {{ site.page_width | default: '1200px' }})) / 2 + 25px);
 }
 
 /* scrollbar */
@@ -123,7 +123,7 @@
     display: none;
 }
 
-@media (max-width: 1240px) {
+@media (max-width: 1440px) {
     #book-search-input {
         display: none;
     }
