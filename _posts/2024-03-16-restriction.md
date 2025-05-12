@@ -105,7 +105,7 @@ ImageNet 등 대용량 데이터셋을 저장할 때,
 추가 하고자 하는 데이터셋을 자유롭게 추가해도 좋지만,  
 데이터셋이 아닌 개인 파일들 (특히 `*.pth`, `*.npy` 등) 을 저장하는 등 어뷰징 하면 삭제 하겠습니다.
 
-#### Quota 현황
+### Quota 현황
 
 각 서버에서 `quota` 실행시 확인할 수 있습니다.
 
@@ -133,15 +133,3 @@ ImageNet 등 대용량 데이터셋을 저장할 때,
 |workstation3 | /home | 80G |
 |workstation3 | /nfs3 | 500G |
 |workstation3 | /nfs4 | 500G |
-
-<!-- | nodename | / size,quota | /home size,quota | /data size,quota | /data1 size,quota | /data2 size,quota | data3 size,quota |
-|----------|--------|------------|------------|-------------|-------------|------------:|
-|server1 | 246G, 20G | 600G, 45G | 1.8T, 300G |
-|server2 | 210G, 20G | 630G, 50G | 8.5T, 600G |
-|server3 |
-|server4 |
-|server5 |
-|server6 |
-|workstation1 | 567G | 344G |
-|workstation2 | 567G | 344G |
-|workstation3 | 567G | 344G | -->
