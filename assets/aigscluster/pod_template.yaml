@@ -1,0 +1,106 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: miil-{USERNAME}-{DATE YYYYMMDD}
+  namespace: miil
+spec:
+  securityContext:
+    runAsUser: 1009
+    runAsGroup: 1009
+    fsGroup: 1009
+    fsGroupChangePolicy: "OnRootMismatch"  # OnRootMismatch: only change permissions and ownership if root directory permissions don't match
+                                          # Always: always change volume permissions and ownership when mounted
+
+  restartPolicy: OnFailure
+  # Other options:
+  # restartPolicy: Never
+  # restartPolicy: Always
+
+  volumes:
+  - name: shmdir
+    emptyDir:
+      medium: Memory
+  - name: pvc-volume
+    persistentVolumeClaim:
+      claimName: miil-pvc
+  - name: shared
+    hostPath:
+      path: /gpfs/shared
+      type: Directory
+
+  containers:
+  - name: gpu-container
+    #image: login.local:8888/ost-hub/cuda12.1-pytorch2.3-py3.10:2024-05-01
+    image: {DOCKERHUBPATH}
+    imagePullPolicy: Always  # Alternative: IfNotPresent
+    env:
+    - name: HOME
+      value: /home/miil
+    securityContext:
+      runAsUser: 0
+      privileged: true
+    volumeMounts:
+    - mountPath: /dev/shm
+      name: shmdir
+    - mountPath: /home/miil
+      name: pvc-volume
+    - mountPath: /gpfs/shared
+      name: shared
+    command:
+    - "/bin/sh"
+    - "-c"
+    args:
+    - |
+      cd /home/miil && 
+      # Fix permissions for APT
+      mkdir -p /var/lib/apt/lists/partial && 
+      chmod -R 755 /var/lib/apt/lists && 
+      
+      # Try alternate methods if apt-get fails
+      (apt-get update && apt-get install -y openssh-server) || 
+      (apt-get clean && apt-get update && apt-get install -y openssh-server) ||
+      
+      # If standard methods fail, try direct alternative
+      (if [ -f /usr/sbin/sshd ]; then
+          echo "SSH server already installed";
+      else
+          echo "Trying alternative installation method";
+          mkdir -p /run/sshd;
+          if [ -f /etc/ssh/sshd_config ]; then
+              echo "SSH configuration exists";
+          else
+              # Create minimal sshd_config if needed
+              echo "Creating minimal SSH configuration";
+              echo "PermitRootLogin yes" > /etc/ssh/sshd_config;
+              echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config;
+          fi;
+      fi);
+      
+      # Configure and start SSH
+      mkdir -p /run/sshd && 
+      echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && 
+      echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && 
+      echo 'root:sshsecret2024' | chpasswd && 
+      echo "SSH server starting - root password is 'sshsecret2024'" && 
+      
+      # Start SSH if available, otherwise keep container running
+      if [ -f /usr/sbin/sshd ]; then
+          /usr/sbin/sshd -D &
+          echo "SSH server started successfully";
+      else
+          echo "WARNING: Could not start SSH server - permission issues";
+      fi;
+      
+      # Keep container running
+      tail -f /dev/null
+
+    resources:
+      requests:
+        nvidia.com/gpu: {NUMGPUS}
+      limits:
+        nvidia.com/gpu: {NUMGPUS}
+
+  nodeSelector:
+    # kubernetes.io/hostname: hawk04
+    accelerator: A100-80G
+

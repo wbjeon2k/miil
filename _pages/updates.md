@@ -6,17 +6,21 @@ category: Jekyll
 layout: post
 ---
 
-### UPD 20250429
+#### UPD 20250512
+
+- AIGS Cluster 사용 방법 추가
+
+#### UPD 20250429
 
 - readme.md 수정
 - restrictions.md 디스크 별 quota 용량 최신화
 - 기타 추가 내용 작성 및 수정
 
-### UPD 20240904
+#### UPD 20240904
 
 - workstation 관련 내용 FAQ에 추가
 
-### UPD 20240630
+#### UPD 20240630
 
 - nfs1, nfs2 추가
   - nfs1, nfs2가 추가 되었습니다.
@@ -29,7 +33,7 @@ layout: post
   - 일단은 한 번에 한 사람만 쓸 수 있도록 하였습니다.
 
 
-### UPD 20240625
+#### UPD 20240625
 
 - server5, server6 추가
   - 서버 5,6이 Slurm cluster에 추가 되었습니다.
@@ -46,7 +50,7 @@ layout: post
   - 이를 통해서 서버 로컬 디스크 수요를 많이 줄일 수 있을것으로 예상됩니다.
   - 도합 7TB지만, 개별 디스크 용량은 이보다 작다는 것을 참고해주시면 감사하겠습니다.
 
-### UPD 20240613
+#### UPD 20240613
 
 **Major update**
 
@@ -64,39 +68,39 @@ layout: post
   - 워크스테이션 cluster 추가
   - 워크스테이션2에 NFS 추가
 
-#### UPD 20240418
+##### UPD 20240418
 
 - 기본 할당되는 CPU의 양이 1개밖에 안되는거 fix
 - 사용가능한 자원 조회 페이지 업데이트
 - UPD 페이지 업데이트
 - Restriction 페이지 업데이트
 
-#### UPD 20240419
+##### UPD 20240419
 
 - FAQ update
 
-#### UPD 20240422
+##### UPD 20240422
 
 - 사용 예시 추가
 - FAQ update
 
-#### UPD 20240423
+##### UPD 20240423
 
 - 서버3 GPU 할당 오류 해결
 - list-of-gpus 업데이트
 
-#### UPD 20240508
+##### UPD 20240508
 
 - 서버4 개장
 - list-of-gpus 업데이트
 - MaxTrexPerUser gres/gpu=12 조정
 
-#### UPD 202405014
+##### UPD 202405014
 
 - restrictions cpu 개수 내용 업데이트
 - 최대 실행 가능 job 개수 6개로 수정
 
-#### UPD 20240515
+##### UPD 20240515
 
 - `CUDA_VISIBLE_DEVICE`를 srun/sbatch 에서 override 해서 할당받지 않은 gpu를 사용할 수 있음
   <br> reported by 태환,위범
