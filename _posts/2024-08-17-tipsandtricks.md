@@ -25,6 +25,8 @@ export NCCL_P2P_DISABLE=1
 
 [taskset](https://man7.org/linux/man-pages/man1/taskset.1.html) 을 통해서 각 command 별로 cpu를 배정하는 예시입니다.  
 
+여러개의 command를 효율적으로 동시에 실행하는 방법입니다.  
+
 sbatch/srun 을 통해서 cpu를 배정 받게되면,  
 `taskset -cp` 를 통해서 해당 node 의 physical cpu id를 아래 예시처럼 확인 할 수 있습니다.  
 
