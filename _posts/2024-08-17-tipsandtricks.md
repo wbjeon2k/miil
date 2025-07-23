@@ -30,7 +30,7 @@ export NCCL_P2P_DISABLE=1
 sbatch/srun 을 통해서 cpu를 배정 받게되면,  
 `taskset -cp` 를 통해서 해당 node 의 physical cpu id를 아래 예시처럼 확인 할 수 있습니다.  
 
-![tasksetcp](/assets/tasksetcp.png)
+![tasksetcp](/miil/assets/tasksetcp.png)
 
 위 예시와 같이, 8개 cpu들이 연속적인 id로 배정되지 않습니다.
 
