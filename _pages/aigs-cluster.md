@@ -103,25 +103,25 @@ UNIST AIGS에서 제공하는 GPU 클러스터 사용 방법입니다.
 
 ##### 실제 사용 예시
 
-![step1](/miil/assets/aigscluster/step1.png)
+![step1](/miil/assets/aigscluster/step1.png)  
 
 사용자 : 관리자에게 dataset 업로드 요청.  
 관리자 : `/home/miil` 아래에 데이터셋 저장.  
 
-![step2](/miil/assets/aigscluster/step2.png)
+![step2](/miil/assets/aigscluster/step2.png)  
 
 관리자: pod 생성. 정상적으로 생성 됐는지 확인.
 
-![step3](/miil/assets/aigscluster/step3.png)
+![step3](/miil/assets/aigscluster/step3.png)  
 
 관리자: `slurmmaster` 에서 ssh 터널 생성.
 
-![step4](/miil/assets/aigscluster/step4.png)
+![step4](/miil/assets/aigscluster/step4.png)  
 
 관리자 : 터널링 된 port 번호 전달  
 사용자 : 해당 port로 접속. `ssh -p <port> root@localhost`.
 
-![step5](/miil/assets/aigscluster/step5.png)
+![step5](/miil/assets/aigscluster/step5.png)  
 
 사용자 : `/home/miil` 로 이동, 데이터셋 등 파일 사용 가능.  
 (step 1 에서 `/dataset` 에 만든 파일이 pod에서 접속 가능한 것을 확인 가능.)  
