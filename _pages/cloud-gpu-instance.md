@@ -44,8 +44,12 @@ layout: post
 
 ##### NHN Cloud
 
-TBD
+연구비 결제 관련해서 절차 준비중입니다.
 
 ##### Others
+
+GCP / AWS "하등급" instance에 대해서는 KISA certified 되었는데,  
+해당 "하등급" instance가 정확히 어떤 서비스 인지 GCP / AWS 에서는 조회가 안됨.  
+KISA 문의 대기중.  
 
 사용 가능 여부 및 비용처리 정리 되는대로 추가 예정.
