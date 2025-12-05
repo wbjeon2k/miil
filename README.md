@@ -15,9 +15,11 @@ http://127.0.0.1:4000/miil
 교내 접속 기준으로 `10.20.22.87:8888` 로 접속하면 JupyterLab 접속이 가능합니다.  
 `HPC Cluster` extension을 실행시키면 아래 화면과 같이 전체 서버 사용 현황 파악이 가능합니다.  
 
+Access JupyterLab via `10.20.22.87:8888` and execute `HPC Cluster` to check information about resources.
+
 ## MIIL Slurm User Guide
 
-Written by <woongbae@unist.ac.kr>. Last Update 20250429  
+Written by <woongbae@unist.ac.kr>. Last Update 20251205  
 
 매뉴얼 확인: <https://wbjeon2k.github.io/miil>  
 
@@ -36,34 +38,56 @@ HPC 클러스터 관리를 하는 전세계 표준 도구입니다.
 
 해당 가이드를 통해서 우리 연구실 환경에 알맞은 Slurm 사용법을 알아봅시다.
 
+This is the usage manual of MIIL Slurm Cluster.  
+Slurm stands for Simple Linux Utility for Resource Management,  
+which is widely used as a default management system in most of HPCs around the world.
+
 ### Disk Resource Restriction
 
 각 사용자별로 디스크 사용량이 제한됩니다.  
 개인별 디스크 사용량 제한은 효율적인 서버 디스크 관리를 하기 위해서 필요합니다.  
+Disk quota is enabled for each users in order to efficiently manage disk usage along the whole system.
 
 상세 용량은 왼쪽의 ['Resource Restriction'](https://wbjeon2k.github.io/miil/2024-03-16-restriction.html) 의 `Quota 현황` 을 참조하세요.  
+Refer to section `Quota 현황` in the page ['Resource Restriction'](https://wbjeon2k.github.io/miil/2024-03-16-restriction.html).
 
-개인별로 용량 제한 아래에서 자유롭게 사용 가능한 `/data` , `nfs` 디렉토리와,  
+개인별로 용량 제한 아래에서 자유롭게 사용 가능한 `/data` , `/nfs` 디렉토리와,  
 모든 사람들이 공유를 할 수 있는 공용 데이터셋 `/dataset` 디렉토리로 나뉘어져 있습니다.  
-(*`/dataset` 디렉토리는 서버 용량에 따라 없을수도 있습니다.*)
+(*`/dataset` 디렉토리는 서버 용량에 따라 없을수도 있습니다.*)  
+(*quota는 자동으로 적용됩니다.*)  
+
+`/data` , `/nfs` directories are allowed to use freely within the quota.  
+(*Quotas are automatically enforced by the system*)  
+`/dataset` directory is store and share dataset files.  
+(*Some servers do not have `/dataset` directory due to disk size.*)  
 
 `/dataset` 디렉토리는 공용 데이터셋을 저장하기 위한 장소입니다.  
 (ImageNet 5개 중복으로 다운 받아서 1TB 잡아먹는 현상 방지, 한 사람이 1TB 사용하는 현상 방지 등)  
+(Is to prevent redundant downloads of 5 ImageNet dataset per each person(1TB total), which is inefficient)  
 
-*데이터셋 디렉토리에 임의로 개인 대용량 파일을 저장하는 등 어뷰징하면 삭제합니다.*
+*데이터셋 디렉토리에 임의로 개인 대용량 파일을 저장하는 등 어뷰징하면 삭제합니다.*  
+*Abusing /dataset by storing a large amount of private data is restricted, and will be deleted.*
 
 ### GPU Resource Restriction
 
 **모든 GPU 사용은 Slurm을 통해서 배정 받아야 사용 가능합니다.**
 
 일반적인 방법으로 서버에 ssh 접속을 하고 나서 `nvidia-smi`를 실행시키면 실행이 안됩니다.  
-이는 시스템적인 오류가 아니라, 모든 GPU 자원은 Slurm을 거쳐서 사용하도록 만든 의도적인 설계입니다.
+이는 시스템적인 오류가 아니라, 모든 GPU 자원은 Slurm을 거쳐서 사용하도록 만든 의도적인 설계입니다.  
 
-따라서 아래와 같은 순서로 사용하는 것을 **매우** 권장합니다.
+Executing `nvidia-smi` after accessing the server with ssh will raise an error.  
+This is not an error, as it is designed to access GPU resources under SLURM's control.  
+
+따라서 아래와 같은 순서로 사용하는 것을 **매우** 권장합니다.  
 
 - Programming in general: 서버에 직접 ssh 접속을 하여 프로그래밍을 합니다.
 - `srun` : `srun`을 통해서 GPU를 할당받고 디버깅을 합니다.
 - `sbatch` : `sbatch`를 통해서 본격적인 실험을 돌리고 기다립니다.
+
+Below usage pattern is **highly** recommended.  
+- Programming in general: Directly access to server via ssh.
+- `srun` : Acquire GPU and debug with `srun` session.
+- `sbatch` : Use `sbatch` for main experiments.
 
 기타 Resource restriction policy에 대한 상세한 내용은 왼쪽의 `Restriction Policy` 글을 참조 해주세요.
 
@@ -90,18 +114,23 @@ Slurm에 자원을 요청하는 방법은 크게 `srun` 과 `sbatch` 두 가지�
 |`--pty /bin/bash`|bash 실행|interactive하게 bash실행| 사실상 건드릴 이유가 딱히 없음.|
 
 예시 1: `srun -p srun --gres=gpu:1 -w server1 --pty /bin/bash`  
-예시 1 해석: 서버1의 GPU 아무거나 하나 배정해줘.
+예시 1 해석: 서버1의 GPU 1개를 아무거나 하나 배정해줘.  
+Example 1: Allocate one gpu from server1, regardless of its type.
 
 예시 2: `srun -p srun --gres=gpu:RTX3090:1 -w server1 --pty /bin/bash`  
-예시 2 해석: 서버1의 GPU들 중 RTX3090을 한 개 배정해줘.
+예시 2 해석: 서버1의 GPU들 중 RTX3090을 한 개 배정해줘.  
+Example 2 : Allocate one RTX3090 from server1.  
 
 예시 3: `srun -p srun --gres=gpu:Q8000:2 -w server2 --pty /bin/bash`  
-예시 3 해석: 서버2의 GPU들 중 Quadro 8000 을 두 개 배정해줘.
+예시 3 해석: 서버2의 GPU들 중 Quadro 8000 을 두 개 배정해줘.  
+Example 3 : Allocate two Quadro 8000 gpus from server2.
 
 `srun`을 통해 배정 받은 세션을 종료하면 자동으로 작업이 끝나고 자원들이 반납됩니다!  
+Allocated resources are automatically returned when `srun` session is expired.  
 
 배정을 받기 위해서 기다리는 동안 세션 종료를 하면 역시 줄 서기가 취소됩니다.  
 **`tmux` 또는 `screen` 명령어로 세션을 유지하도록 합시다.**
+**Recommened to use `tmux` or `screen` to keep your session alive.**
 
 ### sbatch
 
@@ -111,14 +140,16 @@ Slurm에 자원을 요청하는 방법은 크게 `srun` 과 `sbatch` 두 가지�
 #!/bin/bash
 # example_job.sh
 #SBATCH --job-name=<jobname>
-#SBATCH --partition=sbatch # sbatch job들은 sbatch partition 사용 강제됨
+#SBATCH --partition=sbatch
 #SBATCH --nodes=1
 #SBATCH --nodelist=server1
 #SBATCH --output=sbatch.out
 #SBATCH --gres=gpu:2
 # 해당 옵션들을 말로 하자면:
 # 서버1에 gpu 2개를 할당 받아서 experiment.py를 실행시킬래
-#
+# Allocate two gpus from server1, and execute experiment.py
+# sbatch job들은 sbatch partition 사용 강제됨
+# sbatch jobs are force to be submitted to sbatch partition.
 ## Command(s) to run (example):
 
 export PATH="/home/<user_id>/miniconda3/bin:$PATH"
@@ -134,27 +165,35 @@ exit 0 # explicitly announce that job has ended
 
 ```bash
 # slurmmaster에서 접속 후 아래 cmd 실행하면 제출 됨
+# access to slurmmaster and execute below command to submit an sbatch job.
 sbatch example_job.sh
 ```
 
 `sbatch`는 non-interactive job을 사용하는 방법입니다.  
-돌려놓고 결과를 기다리기만 하면 되는, 즉 실험 같은 작업들이 여기에 해당됩니다.
+돌려놓고 결과를 기다리기만 하면 되는, 즉 실험 같은 작업들이 여기에 해당됩니다.  
+`sbatch` is for non-interactive jobs those can be done without interactive user inputs, such as an experiment.
 
 `sbatch`의 중요한 두 가지 요소는 script와 option 입니다.  
 `sbatch`작업 제출은 script를 통해서 이루어 집니다. 즉, `sbatch <script_name>.sh` 와 같은 cmd를 통해서 제출합니다.  
 해당 script 안에는 무엇을, 어떻게 실행하는지에 대한 설명이 필요합니다.  
 예를 들어, 서버1의 `/home/miil/jwb/experiment.sh` 가 '무엇을' 실행하고자 하는 대상(target) 이 됩니다.
 
-`sbatch`작업의 option들은 `#SBATCH --<opt_name>=<opt_content>` 와 같은 형식으로 구성됩니다.
+`sbatch`작업의 option들은 `#SBATCH --<opt_name>=<opt_content>` 와 같은 형식으로 구성됩니다.  
 **해당 옵션들은 실행하고자 하는 cmd들 보다 먼저 선언되어야 합니다!**  
+**All #SBATCH options must be defined before the actual commands**  
 예를 들어, 위 예시 sbatch 파일의 `export PATH= ...` 전에 `#SBATCH --nodelist= ...` 옵션들의 작성이 완료 되어야 합니다.
 
 ### 잘못 제출했어요
 
 각 job을 제출하면 `job_id` 번호를 보여줍니다.  
 `scancel job_id` (`scancel 35` 등) 를 통해서 제출을 취소할 수 있습니다.  
-`job_id`를 까먹었어도 괜찮습니다. 아래 '전체 서버 사용량 파악'을 통해서 알 수 있습니다.  
-**자기 작업만 취소 가능합니다!**.
+`job_id`를 까먹었어도 괜찮습니다. `squeue` 나 `10.20.22.87:888` 등을 통해서 알 수 있습니다.  
+**자기 작업만 취소 가능합니다!**.  
+
+In case the user has submitted the wrong job, it can be cancelled by `scancel job_id`.  
+Check the job_id by executing `squeue` or accessing to `10.20.22.87:888`.
+
+
 
 ## 튜토리얼
 
@@ -162,6 +201,7 @@ sbatch example_job.sh
 
 - **`slurmmaster(10.20.22.87)` 을 제외한**, `srun` 과 `sbatch`를 통해 사용하고자 하는 서버들에 conda 혹은 유사한 기능의 python venv 를 설정합시다.
 - `miniconda` 설치 방법 확인. <https://conda.io/projects/conda/en/latest/user-guide/install/linux.html> 공식링크.  
+- Install and set conda or similar python venv in each server(node), **except the `slurmmaster(10.20.22.87)`**
 
   ```bash
     mkdir -p ~/miniconda3
@@ -184,6 +224,11 @@ sbatch example_job.sh
 - 자원이 배정 되었을때, `(base) jwb@server1`과 같이 표시되면 정상입니다.
 - `nvidia-smi`, `echo $CUDA_VISIBLE_DEVICES` 를 확인 해봅시다. <br> 서버 총 GPU는 3개지만, visible device는 1개임을 확인할 수 있습니다.
 - <http://10.20.22.87:8888> 에 접속하여 해당 작업이 표시되는지 확인합니다. <br> (*`Display my job only` 체크 해제*)
+- Access to server1 and install conda. `ssh -p 55125 asdf@10.20.22.107`
+- Access the master node `slurmmaster(10.20.22.87)`. `ssh -p 4091 asdf@10.20.22.87`
+- Do NOT install conda in `slurmmaster(10.20.22.87)`, as it is totally useless.
+- Execute `srun -p srun --gres=gpu:1 -w server1 -J <some_jobs_name> --pty /bin/bash`
+- Check if it is listed in <http://10.20.22.87:8888>. Disable `Display my job only` checkbox.  
 
 ![srun_tutorial](./assets/srun_tutorial.png)
 
@@ -191,6 +236,7 @@ sbatch example_job.sh
 
 ### sbatch
 
+- Access server1 and make `example_job.py` as in below under your `/home/<user>`.
 - 자기 계정으로 서버1에 접속, `/home/<user>` 에 `example_job.py`를 만들어 봅시다. <br>
 
   ```python
@@ -205,7 +251,9 @@ sbatch example_job.sh
   if __name__ == "__main__":
       main()
   ```
+- Access the master node `slurmmaster(10.20.22.87)`.
 - 자기 계정으로 마스터 서버 `slurmmaster(10.20.22.87)` 접속. `ssh -p 4091 asdf@10.20.22.87`
+- Create `example_job.sh` in the master node as below.
 - 마스터 서버에서 아래와 같이 `example_job.sh` 를 만들어 봅시다. <br>
   
   ```bash
@@ -231,6 +279,7 @@ sbatch example_job.sh
   ```
 - `sbatch example_job.sh`를 관리서버에서 실행 시키면, <br> 신청한 자원이 할당 가능한 경우 지정한 노드(여기선 서버1) 에서 `python3 /home/jwb/example_job.py`를 실행합니다.
 - 자기가 신청한 작업이 접수되어서 실행되거나(R), 대기중인지(PD) 살펴봅시다.
+- Execute `sbatch example_job.sh` in the master node, and check if it is running(R) or pending(PD).
 
 ![sbatch_tutorial](./assets/sbatch_tutorial.png)
 

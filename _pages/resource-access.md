@@ -29,6 +29,9 @@ sinfo -p srun -NO "CPUs:24" # CPU 개수 정보가 24칸으로 표시됨
 - MEMORY, ALLOCMEM : ( MEMORY - ALLOCMEM ) 이 현재 사용 가능함. MEMORY는 총량, ALLOCMEM은 현재 사용량.
 - GRES_USED: 사용중인 GPU들. GPU type 별로 몇 개가 사용되는 중인지 파악 가능.
 
+- CPUS(A/I/O/T) : I(Idle) is the number of idle cpus available. A(Alloc): currently used. T(Total) : Total number of cpus.
+- GRES_USED: GPUs under use. It is able to check the number of currently used GPUs per each type.
+
 #### 각 서버별 CPU/GPU/MEM 자원 총량
 
 `sinfo -p sbatch -NO "CPUs:8,Memory:9,Gres:35,NodeList:14"`
