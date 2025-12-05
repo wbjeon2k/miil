@@ -1,6 +1,6 @@
 ---
 layout: home
-title: MIIL Slurm User Guide v0.0.1
+title: MIIL Slurm User Guide v0.0.2
 permalink: /
 ---
 
@@ -17,10 +17,13 @@ http://127.0.0.1:4000/miil
 
 ## MIIL Slurm User Guide
 
-Written by <woongbae@unist.ac.kr>. UPD 20240410  
+Written by <woongbae@unist.ac.kr>. Last Update 20250429  
+
 매뉴얼 확인: <https://wbjeon2k.github.io/miil>  
+
 ID 신쳥 현황: <https://docs.google.com/spreadsheets/d/1_GDAGOQrzGR5rvxuSb47ixEdsWmwomVn5z94GnXuFk0/edit?pli=1#gid=0>
-Others: <https://github.com/wbjeon2k/readme> 원본 레포
+
+Others: <https://github.com/wbjeon2k/miil> 원본 레포
 
 ### Overview
 
@@ -35,13 +38,16 @@ HPC 클러스터 관리를 하는 전세계 표준 도구입니다.
 
 ### Disk Resource Restriction
 
-각 사용자별로 디스크 사용량이 제한됩니다. 왼쪽의 ['Restriction'](https://wbjeon2k.github.io/miil/restriction/2024-03-16-restriction.html) 을 참조하세요.  
+각 사용자별로 디스크 사용량이 제한됩니다.  
+개인별 디스크 사용량 제한은 효율적인 서버 디스크 관리를 하기 위해서 필요합니다.  
 
-개인별로 용량 제한 아래에서 자유롭게 사용 가능한 `/data` 디렉토리와,  
+상세 용량은 왼쪽의 ['Resource Restriction'](https://wbjeon2k.github.io/miil/2024-03-16-restriction.html) 의 `Quota 현황` 을 참조하세요.  
+
+개인별로 용량 제한 아래에서 자유롭게 사용 가능한 `/data` , `nfs` 디렉토리와,  
 모든 사람들이 공유를 할 수 있는 공용 데이터셋 `/dataset` 디렉토리로 나뉘어져 있습니다.  
 (*`/dataset` 디렉토리는 서버 용량에 따라 없을수도 있습니다.*)
 
-데이터셋 공유 및 개인별 디스크 사용량 제한을 통해 효율적으로 서버 디스크 관리를 하고자 합니다.  
+`/dataset` 디렉토리는 공용 데이터셋을 저장하기 위한 장소입니다.  
 (ImageNet 5개 중복으로 다운 받아서 1TB 잡아먹는 현상 방지, 한 사람이 1TB 사용하는 현상 방지 등)  
 
 *데이터셋 디렉토리에 임의로 개인 대용량 파일을 저장하는 등 어뷰징하면 삭제합니다.*
@@ -177,7 +183,7 @@ sbatch example_job.sh
 - `srun -p srun --gres=gpu:1 -w server1 -J <작업이름> --pty /bin/bash` 실행
 - 자원이 배정 되었을때, `(base) jwb@server1`과 같이 표시되면 정상입니다.
 - `nvidia-smi`, `echo $CUDA_VISIBLE_DEVICES` 를 확인 해봅시다. <br> 서버 총 GPU는 3개지만, visible device는 1개임을 확인할 수 있습니다.
-- <http://10.20.22.87:8888> 에 접속하여 해당 작업이 표시되는지 확인합니다. (*`Display my job only` 체크 해제*)
+- <http://10.20.22.87:8888> 에 접속하여 해당 작업이 표시되는지 확인합니다. <br> (*`Display my job only` 체크 해제*)
 
 ![srun_tutorial](./assets/srun_tutorial.png)
 
