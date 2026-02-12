@@ -6,7 +6,9 @@ category: Jekyll
 layout: post
 ---
 
-#### 신청 링크
+2026.02.12 현재는 접수를 받지 않는 상태입니다.
+
+<!-- #### 신청 링크
 
 **신청 접수 링크** : <https://forms.gle/d82jSnhpe6DHMSY59>  
 
@@ -52,4 +54,4 @@ GCP / AWS "하등급" instance에 대해서는 KISA certified 되었는데,
 해당 "하등급" instance가 정확히 어떤 서비스 인지 GCP / AWS 에서는 조회가 안됨.  
 KISA 문의 대기중.  
 
-사용 가능 여부 및 비용처리 정리 되는대로 추가 예정.
+사용 가능 여부 및 비용처리 정리 되는대로 추가 예정. -->
