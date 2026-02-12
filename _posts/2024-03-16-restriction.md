@@ -1,9 +1,23 @@
 ---
-title: Resource Restriction
+title: Resource Restriction (QOS)
 author: Woongbae Jeon
 date: 2024-03-16
 layout: post
 ---
+
+### Note
+
+SLURM 도입 및 QOS 설정은 자원의 공정하면서도 효율적인 분배를 위함입니다.  
+
+해당 QOS 정책이 본래 기대효과와 다르게 작용하여  
+공정성이나 효율성에 문제를 발생시키는 경우,  
+관리자 판단 하에 조정 될 수 있습니다.  
+
+The whole purpose of adopting SLURM and QOS setting  
+is for a fair and efficient distribution of the system resource.  
+
+If the admin assesses that current QOS policy violates either fairness or efficiency,  
+the policy may be adjusted after consideration.
 
 ### 자원 제한 현황
 
