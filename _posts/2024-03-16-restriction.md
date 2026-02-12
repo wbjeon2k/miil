@@ -7,17 +7,22 @@ layout: post
 
 ### 자원 제한 현황
 
-|Name | 1인당 최대GPU개수 | 서버 당 최대GPU개수 | 최소GPU개수 | 최대 제출가능 작업 | 최대 실행가능 작업 |  
-|----|:---|:---|:---|:---|:---|  
-|srun    |   gres/gpu=2 | gres/gpu=2 | gres/gpu=1 | 1개 | 1개 |
-|sbatch  |   gres/gpu=12 | gres/gpu=4 | gres/gpu=1 | 8개 | 6개 |
-|workstation  |  gres/gpu=2 | gres/gpu=2 | gres/gpu=1 | 1개 | 1개 |
+|Name | 1인당 최대 자원 | 서버 당 최대 자원 | 제출 작업 당 최대 자원| 최소GPU개수 | 최대 제출가능 작업 | 최대 실행가능 작업 |  
+|----|:---|:---|:---|:---|:---|:---|  
+|srun    |   gres/gpu=2 | cpu=24,gres/gpu=2 | | gres/gpu=1 | 1개 | 1개 |
+|sbatch  |   gres/gpu=14  | cpu=80,gres/gpu=6|cpu=40,gres/gpu=6| gres/gpu=1 | 8개 | 6개 |
+
+```text
+      Name     MaxTRESPU           MaxTRESPerNode           MaxTRESPerJob       MinTRES MaxJobsPU MaxSubmitPU
+---------- ------------- ------------------------ ----------------------- ------------- --------- -----------
+      srun    gres/gpu=2        cpu=24,gres/gpu=2                            gres/gpu=1         1           1
+    sbatch   gres/gpu=14        cpu=80,gres/gpu=6       cpu=40,gres/gpu=6    gres/gpu=1         6           8
+```
 
 |Name | 기본 CPU개수 | 서버당 최대CPU개수 | 1개 작업 최대 cpu | 기본 메모리(MB) | 최대 메모리(MB) | 기본 배정 시간 | 최대 배정 시간|  
 |----|:---|:---|:---|:---|:---|:---|:---|
 |srun  | 8 per gpu|24|24| 28300(30G)|135000(128G)| 없음| 1440(1day)|
-|sbatch| 8 per gpu|64|32| 28300(30G)|135000(128G)| 2880(2days)| 10080(7days)|
-|workstation | 8 per gpu|32|32| 28300(30G)|135000(128G)| 2880(2days)| 4320(3days)|
+|sbatch| 8 per gpu|80|40| 28300(30G)|135000(128G)| 2880(2days)| 10080(7days)|
 
 ### GPU 사용량 제한
 
@@ -32,17 +37,18 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
 (예: 서버5는 gpu 3개 비어 있으니까 4개 신청하면 기다리겠네)  
 (예2: 지금 gpu를 5개 쓰고 있으니까 최대 3개를 더 쓸수 있겠네) 
 
-- 최대 GPU개수(`MaxTRESPerUser`) : 1 사람이 최대로 사용할 수 있는 GPU 개수입니다.
+- 1인당 최대 자원(`MaxTRESPerUser`) : 1 사람이 최대로 사용할 수 있는 GPU 개수입니다.
     <br> 모든 `srun` 및 `sbatch` 작업에서 사용되는 gpu 개수를 합쳤을 때 8개를 넘길 수 없습니다.
     <br> `e.g. srun job A 1개, sbatch job B 3개 쓰고 있을 때 / sbatch job C에 최대 4개 가능`
 - 서버 당 최대GPU개수(`MaxTRESPerNode`) : 1개의 서버에서 최대로 사용할 수 있는 GPU의 개수입니다.
     <br> `e.g. server2에 GPU 8개 있지만, 최대 4개 사용 가능.`
-- 최소GPU개수(`MinTRES`) : 최소로 사용을 해야하는 GPU 개수입니다. 1개로 설정 되어있습니다. <br>
+- 최소 자원(`MinTRES`) : 최소로 사용을 해야하는 GPU 개수입니다. 1개로 설정 되어있습니다. <br>
     (i.e. GPU 사용 안하면 Slurm 제출하지 말라는 의미입니다.)
-- 최대 실행가능 작업(`MaxJobsPerUser`) : 1 사람이 최대로 실행할 수 있는 작업 개수입니다. `srun`과 `sbatch` 전부 포함입니다.
+- 1인당 최대 실행가능 작업(`MaxJobsPerUser`) : 1 사람이 최대로 실행할 수 있는 작업 개수입니다. `srun`과 `sbatch` 전부 포함입니다.
     <br> `e.g. 제한이 4개라면 srun 1개, sbatch 3개 가능 / sbatch 5개 불가능`
-- 최대 제출가능 작업(`MaxSubmitJobsPU`) : 1 사람이 최대로 접수할 수 있는 작업 개수입니다. `srun`과 `sbatch` 전부 포함입니다.
+- 1인당 최대 제출가능 작업(`MaxSubmitJobsPU`) : 1 사람이 최대로 접수할 수 있는 작업 개수입니다. `srun`과 `sbatch` 전부 포함입니다.
     <br> `e.g. 제한이 8개인데 srun 1개, sbatch 4개 실행 중이라면? sbatch 최대 3개 접수 가능.`
+- 작업 당 최대 자원(`MaxTRESPerJob(MaxTRES)`) : 1개 작업 당 최대로 사용할 수 있는 cpu 및 gpu 개수입니다.
 
 더 자세히 알고싶거나 직접 Slurm 을 통해 확인해보고 싶다면 다음 cmd를 사용하세요.  
 `sacctmgr show qos format=name,MaxTRESPerUser,MaxTRESPerNode,MinTRES,MaxJobsPerUser,MaxSubmitJobsPU`
@@ -83,7 +89,7 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
 
 ### Disk 사용량 제한
 
-개인별 디스크 사용량 제한량은 대략 `디스크 용량/10` 정도라고 보면 됩니다.
+개인별 디스크 사용량 제한량은 대략 `디스크 용량/9~10` 정도라고 보면 됩니다.
 
 *required: 반드시 있는 것 / optional: 로컬디스크 상황에 따라 없을수도 있음*
 
