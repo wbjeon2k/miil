@@ -6,6 +6,14 @@ category: Jekyll
 layout: post
 ---
 
+#### UPD 20260202
+- Server7 is added to the cluster.
+- QOS policy updated.
+  - `MaxTRESPerUser` increased as 15 (from 12).
+  - `MaxTRESPerNode` increased as 6 (from 4).
+  - etc
+- Updated restrictions, list-of-gpus and list-of-nodes.
+
 #### UPD 20251205
 - Updated an English version.
 

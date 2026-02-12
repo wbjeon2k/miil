@@ -1,6 +1,6 @@
 ---
 layout: home
-title: MIIL Slurm User Guide v0.0.2
+title: MIIL Slurm User Guide v0.1.0
 permalink: /
 ---
 

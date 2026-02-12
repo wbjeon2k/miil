@@ -14,7 +14,7 @@ sinfo -p sbatch -NO "CPUs:8,Memory:9,Gres:70,NodeList:14"
 
 |GPU Type | 개수 | Slurm GRES Code|  
 |--------|------|--------|  
-|RTX3090 | 3 | `--gres=gpu:RTX3090:<n>`|
+|RTX3090 | 6 | `--gres=gpu:RTX3090:<n>`|
 |RTX4090 | 1 | `--gres=gpu:RTX4090:<n>`|
 
 ### Server2
@@ -56,3 +56,10 @@ PCI HW 및 Slurm 버그로 인해서 다음과 같이 사용 바랍니다.
 |--------|------|--------|  
 |A100| 2 | `--gres=gpu:A100:<n>`|
 |A6000 | 6 | `--gres=gpu:A6000:<n>`|
+
+### Server7
+
+|GPU Type | 개수 | Slurm GRES Code|  
+|--------|------|--------|  
+|A6000| 1 | `--gres=gpu:A6000:<n>`|
+|ADA6000 | 5 | `--gres=gpu:ADA6000:<n>`|

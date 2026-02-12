@@ -10,19 +10,24 @@ layout: post
 |Name | 1인당 최대 자원 | 서버 당 최대 자원 | 제출 작업 당 최대 자원| 최소GPU개수 | 최대 제출가능 작업 | 최대 실행가능 작업 |  
 |----|:---|:---|:---|:---|:---|:---|  
 |srun    |   gres/gpu=2 | cpu=24,gres/gpu=2 | | gres/gpu=1 | 1개 | 1개 |
-|sbatch  |   gres/gpu=14  | cpu=80,gres/gpu=6|cpu=40,gres/gpu=6| gres/gpu=1 | 8개 | 6개 |
+|sbatch  |   gres/gpu=15  | cpu=80,gres/gpu=6|cpu=40,gres/gpu=6| gres/gpu=1 | 8개 | 6개 |
 
-```text
+직접 보고 싶다면 아래 cmd로 보면 됩니다.
+
+```
+
+sacctmgr show qos format=name,priority,MaxTRESPerUser,MaxTRESPerNode%24,MaxTRESPerJob%23,MinTRES,MaxJobsPerUser,MaxSubmitJobsPU
+
       Name     MaxTRESPU           MaxTRESPerNode           MaxTRESPerJob       MinTRES MaxJobsPU MaxSubmitPU
 ---------- ------------- ------------------------ ----------------------- ------------- --------- -----------
       srun    gres/gpu=2        cpu=24,gres/gpu=2                            gres/gpu=1         1           1
-    sbatch   gres/gpu=14        cpu=80,gres/gpu=6       cpu=40,gres/gpu=6    gres/gpu=1         6           8
+    sbatch   gres/gpu=15        cpu=80,gres/gpu=6       cpu=40,gres/gpu=6    gres/gpu=1         6           8
 ```
 
-|Name | 기본 CPU개수 | 서버당 최대CPU개수 | 1개 작업 최대 cpu | 기본 메모리(MB) | 최대 메모리(MB) | 기본 배정 시간 | 최대 배정 시간|  
-|----|:---|:---|:---|:---|:---|:---|:---|
-|srun  | 8 per gpu|24|24| 28300(30G)|135000(128G)| 없음| 1440(1day)|
-|sbatch| 8 per gpu|80|40| 28300(30G)|135000(128G)| 2880(2days)| 10080(7days)|
+|Name | 기본 CPU개수 | 서버당 최대CPU개수 | 1개 작업 최대 cpu | 기본 배정 시간 | 최대 배정 시간|  
+|----|:---|:---|:---|:---|:---|
+|srun  | 8 per gpu|24|24| 없음| 1440(1day)|
+|sbatch| 8 per gpu|80|40|  2880(2days)| 10080(7days)|
 
 ### GPU 사용량 제한
 
@@ -38,8 +43,8 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
 (예2: 지금 gpu를 5개 쓰고 있으니까 최대 3개를 더 쓸수 있겠네) 
 
 - 1인당 최대 자원(`MaxTRESPerUser`) : 1 사람이 최대로 사용할 수 있는 GPU 개수입니다.
-    <br> 모든 `srun` 및 `sbatch` 작업에서 사용되는 gpu 개수를 합쳤을 때 8개를 넘길 수 없습니다.
-    <br> `e.g. srun job A 1개, sbatch job B 3개 쓰고 있을 때 / sbatch job C에 최대 4개 가능`
+    <br> 모든 `srun` 및 `sbatch` 작업에서 사용되는 gpu 개수를 합쳤을 때 `MaxTRESPerUser`를 넘길 수 없습니다.
+    <br> `e.g. If MaxTRESPerUser==8 and srun job A 1개, sbatch job B 3개 쓰고 있을 때 / sbatch job C에 최대 4개 가능`
 - 서버 당 최대GPU개수(`MaxTRESPerNode`) : 1개의 서버에서 최대로 사용할 수 있는 GPU의 개수입니다.
     <br> `e.g. server2에 GPU 8개 있지만, 최대 4개 사용 가능.`
 - 최소 자원(`MinTRES`) : 최소로 사용을 해야하는 GPU 개수입니다. 1개로 설정 되어있습니다. <br>
@@ -50,8 +55,7 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
     <br> `e.g. 제한이 8개인데 srun 1개, sbatch 4개 실행 중이라면? sbatch 최대 3개 접수 가능.`
 - 작업 당 최대 자원(`MaxTRESPerJob(MaxTRES)`) : 1개 작업 당 최대로 사용할 수 있는 cpu 및 gpu 개수입니다.
 
-더 자세히 알고싶거나 직접 Slurm 을 통해 확인해보고 싶다면 다음 cmd를 사용하세요.  
-`sacctmgr show qos format=name,MaxTRESPerUser,MaxTRESPerNode,MinTRES,MaxJobsPerUser,MaxSubmitJobsPU`
+더 자세히 알고싶거나 직접 Slurm 을 통해 확인해보고 싶다면 위의 예시 cmd를 사용하세요.  
 
 - 기본 배정시간 : `sbatch` 는 2일(2880 mins) 입니다.
 - 최대 배정시간 : `sbatch` 는 7일, `srun`은 1일 입니다.
@@ -75,6 +79,7 @@ sbatch/srun을 통해 자원을 할당 받을 때 참고하세요.
 
 작업들이 배정받을 메모리가 부족하다면 계속 기다릴수도 있습니다.  
 (GPU가 남아도 메모리가 부족해서 새로운 작업이 대기(PD) 상태에 들어갈 수 있음.)  
+
 `python gc.collect()` 등을 활용해서 불필요한 메모리 사용을 줄여봅시다.
 
 ### CPU 제한
@@ -113,29 +118,9 @@ ImageNet 등 대용량 데이터셋을 저장할 때,
 
 ### Quota 현황
 
-각 서버에서 `quota` 실행시 확인할 수 있습니다.
+각 서버에서 `quota -s` 실행시 확인할 수 있습니다.  
+
+NFS의 경우, NFS가 mount 된 서버나 워크스테이션에 직접 접속해서 확인하면 됩니다. [List of NFS link](https://wbjeon2k.github.io/miil/2024-06-29-list-of-nfs.html)  
+(NFS RPC client 통신이 안됨)  
 
 ![quota_example](/miil/assets/quota_example.png)
-
-| nodename | path | size(GB) |
-|------|------|------:|
-|master |  /home | 32G |
-|server1 | /home | 45G |
-|server1 | /data | 300G |
-|server2 | /home | 50G |
-|server2 | /data | 600G |
-|server2 | /dataset | 0G |
-|server3 | /home | 300G |
-|server3 | /data | 330G |
-|server4 | /home | 400G |
-|server5 | /home | 150G |
-|server5 | /data | 150G |
-|server5 | /nfs2 | 250G |
-|server6 | /home | 150G |
-|server6 | /data | 150G |
-|workstation1 | /home | 60G |
-|workstation2 | /home | 60G |
-|workstation2 | /nfs1 | 250G |
-|workstation3 | /home | 80G |
-|workstation3 | /nfs3 | 500G |
-|workstation3 | /nfs4 | 500G |
