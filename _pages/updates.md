@@ -6,6 +6,9 @@ category: Jekyll
 layout: post
 ---
 
+#### UPD 20251205
+- Updated an English version.
+
 #### UPD 20250512
 
 - AIGS Cluster 사용 방법 추가

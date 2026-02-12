@@ -15,6 +15,7 @@ layout: post
 
 만약 gpu 4개를 쓴다면,  
 `--gres=gpu:A8000:3, gpu:RTX3090:1` 과 같은 형태로 배정받을 수 있습니다.  
+In order to use multiple types of GPUs, set GRES option as like `--gres=gpu:A8000:3, gpu:RTX3090:1`.
 
 ### Q. GPU를 번호별로 배정 받을 수 있나요?
 
@@ -36,7 +37,8 @@ Slurm은 해당 8개 중에서 4개를 *아무거나* 배정해서 줍니다.
 ### Q. sbatch 작업을 srun 파티션에 제출하거나 vice versa의 경우 어떻게 되나요?
 
 srun 작업을 sbatch에 제출하면 제출이 즉시 거부되거나, 제출 되더라도 3분 이내에 취소됩니다.  
-해당 작업들이 취소 되었다고 알림이 가지는 않습니다.
+해당 작업들이 취소 되었다고 알림이 가지는 않습니다.  
+If srun jobs are submitted to sbatch partition, it will be denied or be terminated within 3 minutes.  
 
 ### Q. 기본으로 배정되는 CPU/Mem 보다 더 많이 할당하고 싶어요
 
@@ -63,6 +65,8 @@ srun 작업을 sbatch에 제출하면 제출이 즉시 거부되거나, 제출 �
 
 CPU/GPU/Mem 중 하나라도 최대 사용량 OR 현재 배정받을 수 있는 양을 초과한다면  
 자리가 빌 때 까지 기다리게 됩니다. 배정 가능한 양을 [여기](https://wbjeon2k.github.io/miil/pages/resource-access/)를 읽어보고 확인합시다.
+
+If default 
 
 ### Q. nvidia-smi, nvcc 깔고 싶어요
 
@@ -99,14 +103,6 @@ NFS에 대해서는, NFS가 mount된 노드에서 quota 실행시 조회 가능�
 
 ### Q. Workstation을 사용하고 싶어요
 
-현재 `workstation[1-3]` 은 Slurm의 `workstation` 파티션에**만** 배정 되어 있습니다.
-
-워크스테이션은 한 번에 한 사람만 쓸 수 있도록 설정 하였기 때문입니다.
-
-`-p <partition_name>` 을 통해서 적절하게 선택하면 됩니다.
-
-```bash
-# srun example
-srun -p workstation --gres=gpu:1 -w workstation1 -J example --pty /bin/bash # correct usage
-srun -p srun --gres=gpu:1 -w workstation1 -J example --pty /bin/bash # incorrect. workstation not in srun partition
-```
+(*UPD20251205*)
+워크스테이션들은 nfs 장착용으로만 사용됩니다. (발열 및 소음 문제)  
+Workstations are only used to host nfs, due to the immense heat and noise.
