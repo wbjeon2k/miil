@@ -6,6 +6,9 @@ category: Jekyll
 layout: post
 ---
 
+#### UPD 20261117
+- Updated `nfs5,nfs6,nfs7`.
+
 #### UPD 20251205
 - Updated an English version.
 

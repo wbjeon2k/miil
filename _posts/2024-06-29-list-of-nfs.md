@@ -46,3 +46,24 @@ layout: post
 - Size : 3.7 TB
 - `/nfs4`
 - Quota : 500G per user
+
+#### NFS5
+
+- Physical Location : workstation1
+- Size : 7TB
+- `/nfs5`
+- Quota : 1T per user
+
+#### NFS6
+
+- Physical Location : workstation1
+- Size : 7TB
+- `/nfs6`
+- Quota : 1TB per user
+
+#### NFS7
+
+- Physical Location : workstation1
+- Size : 6.3 TB
+- `/nfs7`
+- Quota : 900G per user
