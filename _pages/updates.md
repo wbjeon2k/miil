@@ -6,10 +6,9 @@ category: Jekyll
 layout: post
 ---
 
-<<<<<<< HEAD
 #### UPD 20261117
 - Updated `nfs5,nfs6,nfs7`.
-=======
+
 #### UPD 20260202
 - Server7 is added to the cluster.
 - QOS policy updated.
@@ -17,7 +16,6 @@ layout: post
   - `MaxTRESPerNode` increased as 6 (from 4).
   - etc
 - Updated restrictions, list-of-gpus and list-of-nodes.
->>>>>>> a89fb3d23bad7a45309d86b315d89d3205c75331
 
 #### UPD 20251205
 - Updated an English version.
