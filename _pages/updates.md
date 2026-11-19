@@ -6,6 +6,9 @@ category: Jekyll
 layout: post
 ---
 
+#### UPD 20261119
+- 2 gpus are added to server7
+
 #### UPD 20261117
 - Updated `nfs5,nfs6,nfs7`.
 

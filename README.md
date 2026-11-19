@@ -19,7 +19,7 @@ Access JupyterLab via `10.20.22.87:8888` and execute `HPC Cluster` to check info
 
 ## MIIL Slurm User Guide
 
-Written by <woongbae@unist.ac.kr>. Last Update 20251205  
+Written by <woongbae@unist.ac.kr>. Last Update 20261119   
 
 매뉴얼 확인: <https://wbjeon2k.github.io/miil>  
 
